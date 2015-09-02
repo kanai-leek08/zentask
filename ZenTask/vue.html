@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vue Sample</title>
+<script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/vue/0.12.8/vue.min.js'></script>
+<script>
+  $(function() {
+    var app = new Vue({
+      el: '#simple',
+      data: {
+          message: "Hellow Vue.js",
+          font:""
+      },
+      methods:{
+          magnify: function(){
+              this.font = "font-size:20px;color:red"
+          },
+          alert: function(){
+            alert('hoge')
+          }
+      }
+    });
+    var app = new Vue({
+    el: '#todo',
+    data: {
+        todos: []
+    },
+    computed: {
+        lefts: function(){
+            return this.todos.filter(function(t){ return !t.isDone }).length;
+        }
+    },
+    created: function(){
+        this.title = "My Todos";
+        var suffix = ["a","b","c","d","e"]
+        for(var i = 0; i < suffix.length; i++){
+            this.todos.push({ isDone:false , title:"task-" + suffix[i] });
+        }
+    },
+    methods:{
+        addTodo: function(){
+            this.todos.push({ isDone:false , title:"task-" + this.todos.length });
+        }
+    }
+});
+Vue.component("header-template", {
+    template: "#headerTemplate",
+    methods:{
+        hello:function(e){
+            alert("hello!");
+        }
+    }
+})
+Vue.component("item-template", {
+    template: "{{u.user_id}}:{{u.name}}"
+})
+
+var app = new Vue({
+    el:"#app",
+    data:{
+        user:[ {user_id:"1",name:"hage man"}, {user_id:"2",name:"hoge girl"}]
+    }
+})
+  });
+</script>
+</head>
+<body>
+  <div id="simple">
+    <span v-text="message" v-on="click: magnify" v-attr="style:font">text</span>
+    <span v-text="message" v-on="click: alert" v-attr="style:font">hoge</span>
+  </div>
+  <div id="todo">
+    <h1>My Todos</h1>
+    <div v-repeat="t : todos | orderBy 'isDone'">
+        <input type="checkbox" v-model="t.isDone" />
+        {{$index}}:{{t.title}}
+    </div>
+    <input type="button" v-on="click: addTodo" value="add todo" />
+    <div>
+        left {{lefts}} tasks.
+    </div>
+</div>
+<div id="app">
+    <header-template></header-template>
+    <div v-repeat="u : user" v-component="item-template" v-with="u">
+</div>
+</div>
+
+<script id="headerTemplate" type="text/template">
+    <h3 v-on="click:hello">My Todo</h3>
+</script>
+</body>
+</html>

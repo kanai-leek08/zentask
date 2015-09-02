@@ -1,0 +1,60 @@
+body {
+  margin: 30px;
+  font-family: Meiryo; }
+
+select {
+  background-color: white;
+  font-size: 12px; }
+
+#fuki {
+  font-size: 700px;
+  /* padding-left: 800px; */
+  border-radius: 13px;
+  /* border: solid; */
+  border: 40px solid red;
+  border-radius: 1em;
+  /* padding: 1px 7px; */
+  width: 1000px;
+  height: 1000px;
+  text-align: center;
+  color: red;
+  font-weight: bold;
+  font-family: serif; }
+
+#menu {
+  margin-top: 2000px;
+  margin: 20px; }
+
+#taskSection {
+  margin-top: 2000px; }
+  #taskSection table {
+    border-collapse: collapse; }
+    #taskSection table thead {
+      border-bottom: solid 2px; }
+    #taskSection table tr {
+      border-bottom: 1px solid #9E9E9E; }
+      #taskSection table tr:hover > .column input {
+        color: black; }
+    #taskSection table input {
+      -webkit-transition: 0.1s;
+              transition: 0.1s;
+      color: gray;
+      border: none;
+      width: 100%;
+      height: 90%; }
+    #taskSection table .done {
+      background-color: #C2E1C2; }
+    #taskSection table .activeIcon {
+      border: 1px solid green;
+      border-radius: 8px;
+      padding: 1px 7px;
+      background-color: #BCE6BC;
+      color: green; }
+    #taskSection table .removeBtn, #taskSection table .doneBtn {
+      font-size: 20px;
+      padding: 0px 5px; }
+    #taskSection table .column {
+      padding: 0px 5px; }
+    #taskSection table .active {
+      background-color: green;
+      color: white; }
