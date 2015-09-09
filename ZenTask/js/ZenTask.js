@@ -30,17 +30,23 @@ $(function() {
     },
     methods:{
       addTask: function(){
-        this.tasks.unshift(
-          { projectName: 'ProjectName',
+        var self = this;
+        self.tasks.unshift(
+          {
+            projectName: 'ProjectName',
             ticketId: 'Ticket ID',
             title: 'New Task',
             code: 'CostCode',
+            worker: 'Worker',
             time: '00:00:00',
             timerObj: null,
             isDone: false,
             isActive: false
           }
         );
+        setTimeout(function(){
+          $('.card[data-id=0]').addClass('go');
+        }, 100);
       },
       saveTask: function(){
         $.each(this.tasks, function() {

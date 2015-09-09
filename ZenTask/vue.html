@@ -6,6 +6,7 @@
 <title>ZenTask</title>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="/css/materialize.css" media="screen,projection">
+<link rel='stylesheet' href='css/lib/animations.css'>
 <link rel='stylesheet' href='/css/ZenTask.css'>
 </head>
 <body id="app">
@@ -25,9 +26,9 @@
 
 <section class="container">
   <p class="waves-effect waves-light btn" v-on="click: addTask()"><i class="material-icons left"></i>+add</p>
-  <div class="row">
+  <div class="row animatedParent animateOnce" data-sequence="50">
     <div class="col s6 m4 l3" v-repeat="task:tasks">
-      <div class="card teal lighten-2">
+      <div class="card teal lighten-2 animated flipInY slow" data-id="{{$index}}">
         <div class="card-content white-text">
           <p class="activeIcon" style="display: none">Active</p>
           <p class="deleteBtn right" v-on="click: removeTask($index)">×</p>
@@ -70,7 +71,6 @@
   </table>
 </section>
 
-
 <footer class="page-footer teal darken-1">
   <div class="container">
     <div class="row">
@@ -86,6 +86,7 @@
 <script src='http://cdnjs.cloudflare.com/ajax/libs/vue/0.12.8/vue.min.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
 <script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
+<script src='js/lib/css3-animate-it.js'></script>
 <script type='text/javascript' src='js/KMJS.js'></script>
 <script type='text/javascript' src='js/ZenTask.js'></script>
 </html>
