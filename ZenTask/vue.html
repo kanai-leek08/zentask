@@ -25,11 +25,11 @@
 </header>
 
 <section class="container">
-  <p class="waves-effect waves-light btn" v-on="click: addTask()"><i class="material-icons left"></i>+add</p>
+  <p class="btn-floating btn-large waves-effect waves-light orange" v-on="click: addTask()"><i class="material-icons">add</i></p>
   <div class="row animatedParent animateOnce" data-sequence="50">
     <div class="col s6 m4 l3" v-repeat="task:tasks">
       <div class="card teal lighten-2 animated flipInY slow" data-id="{{$index}}">
-        <div class="card-content white-text">
+        <div class="card-content white-text waves-effect waves-light">
           <p class="activeIcon" style="display: none">Active</p>
           <p class="deleteBtn right" v-on="click: removeTask($index)">×</p>
           <p class="card-title">{{task.title}}</p>
