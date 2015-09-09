@@ -1,95 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="jp">
 <head>
 <meta charset="UTF-8">
-<title>Vue Sample</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ZenTask</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="/css/materialize.css" media="screen,projection">
+<link rel='stylesheet' href='/css/ZenTask.css'>
+</head>
+<body id="app">
+<header>
+  <nav>
+    <div class="nav-wrapper teal darken-1">
+      <a href="#!" class="brand-logo">　ZenTask</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="sass.html"><i class="material-icons">search</i></a></li>
+        <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
+        <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>
+        <li><a href="mobile.html"><i class="material-icons">more_vert</i></a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<section class="container">
+  <p class="waves-effect waves-light btn" v-on="click: addTask()"><i class="material-icons left"></i>+add</p>
+  <div class="row">
+    <div class="col s6 m4 l3" v-repeat="task:tasks">
+      <div class="card teal lighten-2">
+        <div class="card-content white-text">
+          <p class="activeIcon" style="display: none">Active</p>
+          <p class="deleteBtn right" v-on="click: removeTask($index)">×</p>
+          <p class="card-title">{{task.title}}</p>
+          <p class="card-time" v-on="click: toggleTime(task)"><i class="material-icons small">schedule</i><span>{{task.time}}</span></p>
+          <p class="right card-footer">
+            <span class="card-projectName">{{task.projectName}}</span>
+             / <span class="card-ticketId">{{task.ticketId}}</span>
+             / <span class="card-worker">{{task.worker}}</span>
+             /<span class="card-code">{{task.code}}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container" style='display: none;'>
+  <table class="responsive-table teal darken-1 white-text">
+    <thead>
+      <tr>
+        <th>プロジェクト名</th>
+        <th>コストコード</th>
+        <th>作業者名</th>
+        <th>チケットID</th>
+        <th>タイトル</th>
+        <th>作業時間</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span>Sample Project</span></td>
+        <td><span>201</span></td>
+        <td><span>d_kanai</span></td>
+        <td><span>002002</span></td>
+        <td><span>Materialize CSS 学習</span></td>
+        <td><span>02:30:30</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+
+<footer class="page-footer teal darken-1">
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <h5 class="white-text"></h5>
+        <p class="grey-text text-lighten-4">　</p>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
 <script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/vue/0.12.8/vue.min.js'></script>
-<script>
-  $(function() {
-    var app = new Vue({
-      el: '#simple',
-      data: {
-          message: "Hellow Vue.js",
-          font:""
-      },
-      methods:{
-          magnify: function(){
-              this.font = "font-size:20px;color:red"
-          },
-          alert: function(){
-            alert('hoge')
-          }
-      }
-    });
-    var app = new Vue({
-    el: '#todo',
-    data: {
-        todos: []
-    },
-    computed: {
-        lefts: function(){
-            return this.todos.filter(function(t){ return !t.isDone }).length;
-        }
-    },
-    created: function(){
-        this.title = "My Todos";
-        var suffix = ["a","b","c","d","e"]
-        for(var i = 0; i < suffix.length; i++){
-            this.todos.push({ isDone:false , title:"task-" + suffix[i] });
-        }
-    },
-    methods:{
-        addTodo: function(){
-            this.todos.push({ isDone:false , title:"task-" + this.todos.length });
-        }
-    }
-});
-Vue.component("header-template", {
-    template: "#headerTemplate",
-    methods:{
-        hello:function(e){
-            alert("hello!");
-        }
-    }
-})
-Vue.component("item-template", {
-    template: "{{u.user_id}}:{{u.name}}"
-})
-
-var app = new Vue({
-    el:"#app",
-    data:{
-        user:[ {user_id:"1",name:"hage man"}, {user_id:"2",name:"hoge girl"}]
-    }
-})
-  });
-</script>
-</head>
-<body>
-  <div id="simple">
-    <span v-text="message" v-on="click: magnify" v-attr="style:font">text</span>
-    <span v-text="message" v-on="click: alert" v-attr="style:font">hoge</span>
-  </div>
-  <div id="todo">
-    <h1>My Todos</h1>
-    <div v-repeat="t : todos | orderBy 'isDone'">
-        <input type="checkbox" v-model="t.isDone" />
-        {{$index}}:{{t.title}}
-    </div>
-    <input type="button" v-on="click: addTodo" value="add todo" />
-    <div>
-        left {{lefts}} tasks.
-    </div>
-</div>
-<div id="app">
-    <header-template></header-template>
-    <div v-repeat="u : user" v-component="item-template" v-with="u">
-</div>
-</div>
-
-<script id="headerTemplate" type="text/template">
-    <h3 v-on="click:hello">My Todo</h3>
-</script>
-</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+<script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
+<script type='text/javascript' src='js/KMJS.js'></script>
+<script type='text/javascript' src='js/ZenTask.js'></script>
 </html>

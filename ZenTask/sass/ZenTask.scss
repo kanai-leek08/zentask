@@ -1,79 +1,41 @@
+//card-contentのpadding調整
+.card .card-content {
+    padding: 10px;
+    border-radius: 0 0 2px 2px;
+}
+
+$textColorLight: #B2DFDB;
+$themeColorLight: #009587;
+
 body {
-	margin: 30px;
-	font-family:Meiryo;
+	background-color: #363F45;
 }
 
-select {
-	background-color: white;
-	font-size: 12px;
-}
-
-#fuki {
-
-    font-size: 700px;
-    /* padding-left: 800px; */
-    border-radius: 13px;
-    /* border: solid; */
-    border: 40px solid red;
-    border-radius: 1em;
-    /* padding: 1px 7px; */
-    width: 1000px;
-    height: 1000px;
-    text-align: center;
-    color: red;
-    font-weight: bold;
-    font-family: serif;
-
-}
-
-#menu {
-	margin-top: 2000px;
-	margin: 20px;
-}
-
-#taskSection {
-	margin-top: 2000px;
-	table {
-		border-collapse: collapse;
-		thead {
-			border-bottom: solid 2px;
-		}
-		tr {
-			border-bottom: 1px solid #9E9E9E;
-			&:hover > .column input{
-				color: black;
-			}
-		}
-		input {
-			transition: 0.1s;
-			color: gray;
-			border: none;
-			width: 100%;
-			height: 90%;
-		}
-
-		.done {
-			background-color: #C2E1C2;
-		}
-		.activeIcon {
-			border: 1px solid green;
-			border-radius: 8px;
-			padding: 1px 7px;
-			background-color: #BCE6BC;
-			color: green;
-		}
-
-		.removeBtn,.doneBtn {
-			font-size: 20px;
-			padding: 0px 5px;
-		}
-		.column {
-			padding: 0px 5px;
-		}
-
-		.active {
-			background-color: green;
-			color: white;
+.card .card-content {
+	.card-title {
+		border-bottom: solid 2px $themeColorLight;
+	}
+	.card-time {
+		font-size: 25px;
+		padding: 10px 0px;
+		i {
+			vertical-align: top;
+			font-size: 35px;
+			padding: 0px 10px 0px 0px;
 		}
 	}
+	.card-footer {
+		color: $textColorLight;
+	}
+	.deleteBtn {
+		margin: -15px -3px;
+		font-size: 25px;
+		color: $textColorLight;
+	}
+  .activeIcon {
+    width: 50px;
+    background-color: #FF6B3E;
+    color: white;
+    text-align: center;
+  }
 }

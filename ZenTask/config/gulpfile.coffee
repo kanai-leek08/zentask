@@ -7,11 +7,11 @@ plumber = require "gulp-plumber"
 
 # Sass SCSS ビルドタスク
 gulp.task "sass",  ->
-	gulp.src "../github/ZenTask/sass/*.scss"
+	gulp.src "../sass/*.scss"
 	.pipe plumber()
 	.pipe sass()
 	.pipe autoprefixer()
-	.pipe gulp.dest "../github/ZenTask/css/"
+	.pipe gulp.dest "../css/"
 
 # Coffe compile タスク
 gulp.task "coffee", ->
@@ -22,5 +22,5 @@ gulp.task "coffee", ->
 
 # watchタスク
 gulp.task "default", ->
-	gulp.watch "../github/ZenTask/sass/*.scss",["sass"] 
+	gulp.watch "../sass/*.scss",["sass"] 
 	gulp.watch "./*.coffee",["coffee"] 

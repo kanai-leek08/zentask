@@ -25,17 +25,16 @@ $(function() {
     },
     created: function() {
       var self = this;
-      self.tasks = localStorage.get('ZenTask-Task');
-      self.disp = localStorage.get('ZenTask-Disp');
+  　  self.tasks = localStorage.get('ZenTask-Task');
       $(window).on("beforeunload",function(e){ self.saveTask(); });
     },
     methods:{
       addTask: function(){
         this.tasks.unshift(
-          { projectName: '',
-            ticketId: '',
-            title: '',
-            code: '0',
+          { projectName: 'ProjectName',
+            ticketId: 'Ticket ID',
+            title: 'New Task',
+            code: 'CostCode',
             time: '00:00:00',
             timerObj: null,
             isDone: false,
@@ -49,7 +48,6 @@ $(function() {
           this.isActive = false;
         });
         localStorage.set('ZenTask-Task', this.tasks);
-        localStorage.set('ZenTask-Disp', this.disp);
       },
       editTask: function(elem) {
       },
