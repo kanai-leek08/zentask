@@ -1,92 +1,116 @@
 <!DOCTYPE html>
-<html lang="jp">
+<html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ZenTask</title>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="/css/materialize.css" media="screen,projection">
-<link rel='stylesheet' href='css/lib/animations.css'>
-<link rel='stylesheet' href='/css/ZenTask.css'>
+	<link rel="stylesheet" href="/css/materialize.css" media="screen,projection">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel='stylesheet' href='css/lib/animations.css'>
+	<link rel='stylesheet' href='/css/ZenTask.css'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <style type="text/css">
+  	header, main, footer {
+    	padding-left: 240px;
+  	}
+  	@media only screen and (max-width : 992px) {
+    	header, main, footer {
+      	padding-left: 0;
+    	}
+  	}
+  </style>
 </head>
 <body id="app">
-<header>
-  <nav>
-    <div class="nav-wrapper teal darken-1">
-      <a href="#!" class="brand-logo">　ZenTask</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="sass.html"><i class="material-icons">search</i></a></li>
-        <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
-        <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>
-        <li><a href="mobile.html"><i class="material-icons">more_vert</i></a></li>
+  <header>
+  <nav class="teal">
+    <ul id="slide-out" class="side-nav fixed">
+    <li><a href="#!">First Sidebar Link</a></li>
+    <li class="no-padding">
+      <ul class="collapsible collapsible-accordion">
+        <li>
+          <a class="collapsible-header">Dropdown_unko<i class="mdi-navigation-arrow-drop-down"></i></a>
+          <div class="collapsible-body">
+            <ul>
+              <li><a href="#!">First</a></li>
+              <li><a href="#!">Second</a></li>
+              <li><a href="#!">Third</a></li>
+            </ul>
+          </div>
+        </li>
       </ul>
-    </div>
+    </li>
+    <li><a href="#!">Second Sidebar Link</a></li>
+    </ul>
+
+    <ul class="right hide-on-med-and-down">
+      <li><a href="#!">First Sidebar Link</a></li>
+      <li><a href="#!">Second Sidebar Link</a></li>
+      <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Dropdown<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
+      <ul id='dropdown1' class='dropdown-content'>
+        <li><a href="#!">First</a></li>
+        <li><a href="#!">Second</a></li>
+        <li><a href="#!">Third</a></li>
+        <li><a href="#!">Fourth</a></li>
+      </ul>
+    </ul>
+    <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+
   </nav>
-</header>
+  </header>
+  <main>
+		<section class="">
+		  <p class="btn-floating btn-large waves-effect waves-light orange" v-on="click: addTask()"><i class="material-icons">add</i></p>
+		  <div class="row animatedParent animateOnce" data-sequence="50">
+		    <div class="col s4" v-repeat="task:tasks">
+		      <div class="card teal lighten-2 animated flipInY slow" data-id="{{$index}}">
+		        <div class="card-content white-text waves-effect waves-light">
+		          <p class="activeIcon" style="display: none">Active</p>
+		          <p class="deleteBtn right" v-on="click: removeTask($index)">x</p>
+		          <p class="card-title">{{task.title}}</p>
+		          <p class="card-time" v-on="click: toggleTime(task)"><i class="material-icons small">schedule</i><span>{{task.time}}</span></p>
+		          <p class="right card-footer">
+		            <span class="card-projectName">{{task.projectName}}</span>
+		             / <span class="card-ticketId">{{task.ticketId}}</span>
+		             / <span class="card-worker">{{task.worker}}</span>
+		             /<span class="card-code">{{task.code}}</span>
+		          </p>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</section>
 
-<section class="container">
-  <p class="btn-floating btn-large waves-effect waves-light orange" v-on="click: addTask()"><i class="material-icons">add</i></p>
-  <div class="row animatedParent animateOnce" data-sequence="50">
-    <div class="col s6 m4 l3" v-repeat="task:tasks">
-      <div class="card teal lighten-2 animated flipInY slow" data-id="{{$index}}">
-        <div class="card-content white-text waves-effect waves-light">
-          <p class="activeIcon" style="display: none">Active</p>
-          <p class="deleteBtn right" v-on="click: removeTask($index)">×</p>
-          <p class="card-title">{{task.title}}</p>
-          <p class="card-time" v-on="click: toggleTime(task)"><i class="material-icons small">schedule</i><span>{{task.time}}</span></p>
-          <p class="right card-footer">
-            <span class="card-projectName">{{task.projectName}}</span>
-             / <span class="card-ticketId">{{task.ticketId}}</span>
-             / <span class="card-worker">{{task.worker}}</span>
-             /<span class="card-code">{{task.code}}</span>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+		<section class="container" style='display: none;'>
+		  <table class="responsive-table teal darken-1 white-text">
+		    <thead>
+		      <tr>
+		        <th>プロジェクト名</th>
+		        <th>コストコード</th>
+		        <th>作業者名</th>
+		        <th>チケットID</th>
+		        <th>タイトル</th>
+		        <th>作業時間</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr>
+		        <td><span>Sample Project</span></td>
+		        <td><span>201</span></td>
+		        <td><span>d_kanai</span></td>
+		        <td><span>002002</span></td>
+		        <td><span>Materialize CSS 学習</span></td>
+		        <td><span>02:30:30</span></td>
+		      </tr>
+		    </tbody>
+		  </table>
+		</section>
+  </main>
 
-<section class="container" style='display: none;'>
-  <table class="responsive-table teal darken-1 white-text">
-    <thead>
-      <tr>
-        <th>プロジェクト名</th>
-        <th>コストコード</th>
-        <th>作業者名</th>
-        <th>チケットID</th>
-        <th>タイトル</th>
-        <th>作業時間</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span>Sample Project</span></td>
-        <td><span>201</span></td>
-        <td><span>d_kanai</span></td>
-        <td><span>002002</span></td>
-        <td><span>Materialize CSS 学習</span></td>
-        <td><span>02:30:30</span></td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-
-<footer class="page-footer teal darken-1">
-  <div class="container">
-    <div class="row">
-      <div class="col l6 s12">
-        <h5 class="white-text"></h5>
-        <p class="grey-text text-lighten-4">　</p>
-      </div>
-    </div>
-  </div>
-</footer>
+	<script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+	<script src='http://cdnjs.cloudflare.com/ajax/libs/vue/0.12.8/vue.min.js'></script>
+	<script src='js/lib/css3-animate-it.js'></script>
+	<script type='text/javascript' src='js/KMJS.js'></script>
+	<script type='text/javascript' src='js/ZenTask.js'></script>
+  <script>
+    $(".button-collapse").sideNav();
+  </script>
 </body>
-<script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
-<script src='http://cdnjs.cloudflare.com/ajax/libs/vue/0.12.8/vue.min.js'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
-<script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
-<script src='js/lib/css3-animate-it.js'></script>
-<script type='text/javascript' src='js/KMJS.js'></script>
-<script type='text/javascript' src='js/ZenTask.js'></script>
 </html>

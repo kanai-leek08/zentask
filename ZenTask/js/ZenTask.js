@@ -25,7 +25,8 @@ $(function() {
     },
     created: function() {
       var self = this;
-  　  self.tasks = localStorage.get('ZenTask-Task');
+      self.tasks = localStorage.get('ZenTask-Task');
+      $(".button-collapse").sideNav();
       $(window).on("beforeunload",function(e){ self.saveTask(); });
     },
     methods:{

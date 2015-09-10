@@ -5,6 +5,9 @@
 body {
   background-color: #363F45; }
 
+main {
+  margin: 20px; }
+
 .card .card-content .card-title {
   border-bottom: solid 2px #009587; }
 
