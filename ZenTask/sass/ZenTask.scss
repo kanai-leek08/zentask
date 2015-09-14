@@ -1,24 +1,47 @@
 //card-contentのpadding調整
 .card .card-content {
-    padding: 10px;
+    padding: 25px;
     border-radius: 0 0 2px 2px;
+}
+.brand-logo {
+  padding-left: 20px;
+}
+.headNav {
+  li {
+    display: inline-flex;
+    padding: 0px 20px;
+    i {
+      padding: 0px 9px;  
+    }
+  }
 }
 
 $textColorLight: #B2DFDB;
 $themeColorLight: #009587;
 
 body {
-	background-color: #363F45;
+	background-color: #F4F4F4;
+	transition-property: all;
+	transition-duration: 0.5s;
+	transition-timing-function: ease-out;
 }
 main {
   margin: 20px;
 }
 
 .card .card-content {
+  width: 100%;
+
+  &:hover {
+    background-color: #F2FFF6;
+  }
 	.card-title {
+    margin: 0px;
+    color: gray;
 		border-bottom: solid 2px $themeColorLight;
 	}
 	.card-time {
+    color: gray;
 		font-size: 25px;
 		padding: 10px 0px;
 		i {
@@ -29,16 +52,51 @@ main {
 	}
 	.card-footer {
 		color: $textColorLight;
+    display: inline-flex;
+    input {
+      height: 20px;
+      margin: 0px;
+      width: 20%;
+      text-align: center;
+    }
 	}
 	.deleteBtn {
 		margin: -15px -3px;
 		font-size: 25px;
 		color: $textColorLight;
 	}
-  .activeIcon {
-    width: 50px;
-    background-color: #FF6B3E;
-    color: white;
-    text-align: center;
+}
+
+.sashWrap {
+	position: absolute;
+	overflow: hidden;
+	top: 0px;
+	left: 0px;
+	width: 150px;
+	height: 80px;
+}
+.sash {
+	position: absolute;
+	z-index: 5;
+	top: px;
+	left: -50px;
+	width: 150px;
+	padding: 0px 0px 0px 57px;
+	letter-spacing: 3px;
+	background: coral;
+	color: white;
+	font-size: 12px;
+	font-weight: bold;
+	transform: rotate(-26deg);
+}
+
+.card .card-content.active {
+  color: coral;
+  background-color: #E5FFE6;
+  .card-time {
+    letter-spacing: 10px;
+	  transition-property: all;
+  	transition-duration: 0.3s;
+  	transition-timing-function: ease-out;
   }
 }

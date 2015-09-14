@@ -1,34 +1,95 @@
 .card .card-content {
-  padding: 10px;
+  padding: 25px;
   border-radius: 0 0 2px 2px; }
 
+.brand-logo {
+  padding-left: 20px; }
+
+.headNav li {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  padding: 0px 20px; }
+  .headNav li i {
+    padding: 0px 9px; }
+
 body {
-  background-color: #363F45; }
+  background-color: #F4F4F4;
+  -webkit-transition-property: all;
+          transition-property: all;
+  -webkit-transition-duration: 0.5s;
+          transition-duration: 0.5s;
+  -webkit-transition-timing-function: ease-out;
+          transition-timing-function: ease-out; }
 
 main {
   margin: 20px; }
 
-.card .card-content .card-title {
-  border-bottom: solid 2px #009587; }
+.card .card-content {
+  width: 100%; }
+  .card .card-content:hover {
+    background-color: #F2FFF6; }
+  .card .card-content .card-title {
+    margin: 0px;
+    color: gray;
+    border-bottom: solid 2px #009587; }
+  .card .card-content .card-time {
+    color: gray;
+    font-size: 25px;
+    padding: 10px 0px; }
+    .card .card-content .card-time i {
+      vertical-align: top;
+      font-size: 35px;
+      padding: 0px 10px 0px 0px; }
+  .card .card-content .card-footer {
+    color: #B2DFDB;
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex; }
+    .card .card-content .card-footer input {
+      height: 20px;
+      margin: 0px;
+      width: 20%;
+      text-align: center; }
+  .card .card-content .deleteBtn {
+    margin: -15px -3px;
+    font-size: 25px;
+    color: #B2DFDB; }
 
-.card .card-content .card-time {
-  font-size: 25px;
-  padding: 10px 0px; }
-  .card .card-content .card-time i {
-    vertical-align: top;
-    font-size: 35px;
-    padding: 0px 10px 0px 0px; }
+.sashWrap {
+  position: absolute;
+  overflow: hidden;
+  top: 0px;
+  left: 0px;
+  width: 150px;
+  height: 80px; }
 
-.card .card-content .card-footer {
-  color: #B2DFDB; }
-
-.card .card-content .deleteBtn {
-  margin: -15px -3px;
-  font-size: 25px;
-  color: #B2DFDB; }
-
-.card .card-content .activeIcon {
-  width: 50px;
-  background-color: #FF6B3E;
+.sash {
+  position: absolute;
+  z-index: 5;
+  top: px;
+  left: -50px;
+  width: 150px;
+  padding: 0px 0px 0px 57px;
+  letter-spacing: 3px;
+  background: coral;
   color: white;
-  text-align: center; }
+  font-size: 12px;
+  font-weight: bold;
+  -webkit-transform: rotate(-26deg);
+      -ms-transform: rotate(-26deg);
+          transform: rotate(-26deg); }
+
+.card .card-content.active {
+  color: coral;
+  background-color: #E5FFE6; }
+  .card .card-content.active .card-time {
+    letter-spacing: 10px;
+    -webkit-transition-property: all;
+            transition-property: all;
+    -webkit-transition-duration: 0.3s;
+            transition-duration: 0.3s;
+    -webkit-transition-timing-function: ease-out;
+            transition-timing-function: ease-out; }

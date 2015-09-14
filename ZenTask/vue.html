@@ -5,66 +5,42 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel='stylesheet' href='css/lib/animations.css'>
 	<link rel='stylesheet' href='/css/ZenTask.css'>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <style type="text/css">
-  	header, main, footer {
-    	padding-left: 240px;
-  	}
-  	@media only screen and (max-width : 992px) {
-    	header, main, footer {
-      	padding-left: 0;
-    	}
-  	}
-  </style>
+  <meta charset="UTF-8">
 </head>
 <body id="app">
   <header>
-  <nav class="teal">
-    <ul id="slide-out" class="side-nav fixed">
-    <li><a href="#!">First Sidebar Link</a></li>
-    <li class="no-padding">
-      <ul class="collapsible collapsible-accordion">
-        <li>
-          <a class="collapsible-header">Dropdown_unko<i class="mdi-navigation-arrow-drop-down"></i></a>
-          <div class="collapsible-body">
-            <ul>
-              <li><a href="#!">First</a></li>
-              <li><a href="#!">Second</a></li>
-              <li><a href="#!">Third</a></li>
-            </ul>
-          </div>
-        </li>
+  <nav class="">
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo"><img src="img/logo_red.png" width="60">ZenTask</a>
+      <ul class="headNav right hide-on-med-and-down">
+        <li><i class="fa fa-download"></i> CSV Download</li>
+        <li><i class="fa fa-lightbulb-o"></i>How To</li>
+        <li><i class="material-icons small">schedule</i>Reset Time</li>
+        <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons left">arrow_drop_down</i>Mode</a></li>
+        <ul id="dropdown1" class="dropdown-content">
+          <li><a href="#!">Card</a></li>
+          <li><a href="#!">Table</a></li>
+          <li><a href="#!">Zen</a></li>
+        </ul>
       </ul>
-    </li>
-    <li><a href="#!">Second Sidebar Link</a></li>
-    </ul>
-
-    <ul class="right hide-on-med-and-down">
-      <li><a href="#!">First Sidebar Link</a></li>
-      <li><a href="#!">Second Sidebar Link</a></li>
-      <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Dropdown<i class="mdi-navigation-arrow-drop-down right"></i></a></li>
-      <ul id='dropdown1' class='dropdown-content'>
-        <li><a href="#!">First</a></li>
-        <li><a href="#!">Second</a></li>
-        <li><a href="#!">Third</a></li>
-        <li><a href="#!">Fourth</a></li>
-      </ul>
-    </ul>
-    <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-
+    </div>
   </nav>
   </header>
   <main>
 		<section class="">
 		  <p class="btn-floating btn-large waves-effect waves-light orange" v-on="click: addTask()"><i class="material-icons">add</i></p>
 		  <div class="row animatedParent animateOnce" data-sequence="50">
-		    <div class="col s4" v-repeat="task:tasks">
-		      <div class="card teal lighten-2 animated flipInY slow" data-id="{{$index}}">
-		        <div class="card-content white-text waves-effect waves-light">
-		          <p class="activeIcon" style="display: none">Active</p>
-		          <p class="deleteBtn right" v-on="click: removeTask($index)">x</p>
-		          <p class="card-title">{{task.title}}</p>
-		          <p class="card-time" v-on="click: toggleTime(task)"><i class="material-icons small">schedule</i><span>{{task.time}}</span></p>
+		    <div class="col" v-repeat="task:tasks">
+		      <div class="card hoverable z-depth-1 animated flipInY " data-id="{{$index}}">
+            <div class="sashWrap" style='display:none'>
+              <p class="sash">Active</p>
+            </div>
+		        <div class="card-content " v-class="active: task.isActive">
+		          <a class="deleteBtn right waves-effect waves-light" href="#" v-on="click: deleteTask($index)" ><i class="fa fa-times-circle"></i></a>
+		          <input class="card-title edit validate" v-model="task.title" placeholder="タスク名" type="text"></input>
+		          <p class="card-time" v-on="click: toggleTime(this, $index)"><i class="material-icons small">schedule</i><span>{{task.time}}</span></p>
 		          <p class="right card-footer">
 		            <span class="card-projectName">{{task.projectName}}</span>
 		             / <span class="card-ticketId">{{task.ticketId}}</span>
@@ -73,6 +49,15 @@
 		          </p>
 		        </div>
 		      </div>
+          <div id="deleteModal{{$index}}" class="modal">
+            <div class="modal-content center">
+              <h4>このタスクを削除してもよろしいですか？</h4>
+            </div>
+            <div class="center">
+              <p class="btn modal-action modal-close waves-effect waves-green" v-on="click: deleteTask()">OK</p>
+              <p class="btn modal-action modal-close waves-effect waves-green">キャンセル</p>
+            </div>
+          </div>
 		    </div>
 		  </div>
 		</section>
@@ -102,6 +87,8 @@
 		  </table>
 		</section>
   </main>
+
+
 
 	<script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
