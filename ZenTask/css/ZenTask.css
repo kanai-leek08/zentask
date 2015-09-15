@@ -1,7 +1,3 @@
-.card .card-content {
-  padding: 25px;
-  border-radius: 0 0 2px 2px; }
-
 .brand-logo {
   padding-left: 20px; }
 
@@ -33,17 +29,19 @@ main {
   .card .card-content .card-title {
     margin: 0px;
     color: gray;
-    border-bottom: solid 2px #009587; }
+    border-bottom: solid 1px #009587;
+    font-size: 18px; }
   .card .card-content .card-time {
     color: gray;
-    font-size: 25px;
+    font-size: 18px;
     padding: 10px 0px; }
     .card .card-content .card-time i {
       vertical-align: top;
-      font-size: 35px;
-      padding: 0px 10px 0px 0px; }
+      font-size: 24px;
+      padding: 0px 5px 0px 0px; }
   .card .card-content .card-footer {
     color: #B2DFDB;
+    font-size: 11px;
     display: -webkit-inline-box;
     display: -webkit-inline-flex;
     display: -ms-inline-flexbox;
@@ -54,8 +52,8 @@ main {
       width: 20%;
       text-align: center; }
   .card .card-content .deleteBtn {
-    margin: -15px -3px;
-    font-size: 25px;
+    margin: -15px 0px;
+    font-size: 17px;
     color: #B2DFDB; }
 
 .sashWrap {
@@ -86,6 +84,7 @@ main {
   color: coral;
   background-color: #E5FFE6; }
   .card .card-content.active .card-time {
+    color: coral;
     letter-spacing: 10px;
     -webkit-transition-property: all;
             transition-property: all;

@@ -11,15 +11,16 @@
 </head>
 <body id="app">
   <header>
-  <nav class="">
+  <nav class="teal">
     <div class="nav-wrapper">
-      <a href="#!" class="brand-logo"><img src="img/logo_red.png" width="60">ZenTask</a>
+      <a href="#!" class="brand-logo"><img src="img/logo_red.png" width="0">ZenTask</a>
       <ul class="headNav right hide-on-med-and-down">
-        <li><i class="fa fa-download"></i> CSV Download</li>
-        <li><i class="fa fa-lightbulb-o"></i>How To</li>
-        <li><i class="material-icons small">schedule</i>Reset Time</li>
-        <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="material-icons left">arrow_drop_down</i>Mode</a></li>
-        <ul id="dropdown1" class="dropdown-content">
+        <li></li>
+				<li class="modal-trigger waves-effect waves-light" href="#resetModal"><i class="material-icons small">schedule</i>Reset Time</li>
+				<li class="modal-trigger waves-effect waves-light" href="#downloadCsvModal"><i class="fa fa-download"></i> CSV Download</li>
+        <li class="waves-effect waves-light"><i class="fa fa-lightbulb-o"></i>How To</li>
+        <li class="waves-effect waves-light dropdown-button" data-activates="modeMenu"><i class="material-icons">arrow_drop_down</i>Mode</li>
+        <ul id="modeMenu" class="dropdown-content">
           <li><a href="#!">Card</a></li>
           <li><a href="#!">Table</a></li>
           <li><a href="#!">Zen</a></li>
@@ -88,6 +89,27 @@
 		</section>
   </main>
 
+	<section class='modalSection'>
+		<div id="resetModal" class="modal">
+			<div class="modal-content center">
+				<h4>作業時間をリセットしてもよろしいですか？</h4>
+			</div>
+			<div class="center">
+				<p class="btn modal-action modal-close waves-effect waves-green" v-on="click: resetTime()">OK</p>
+				<p class="btn modal-action modal-close waves-effect waves-green">キャンセル</p>
+			</div>
+		</div>
+		<div id="downloadCsvModal" class="modal">
+			<div class="modal-content center">
+				<h4>CSVをダウンロードしますか？</h4>
+			</div>
+			<div class="center">
+				<p class="btn modal-action modal-close waves-effect waves-green" v-on="click: downloadCsv()">OK</p>
+				<p class="btn modal-action modal-close waves-effect waves-green">キャンセル</p>
+				<a id='csvFile'></a>
+			</div>
+		</div>
+	</section>
 
 
 	<script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>

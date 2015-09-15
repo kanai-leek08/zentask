@@ -25,12 +25,13 @@ $(function() {
     },
     created: function() {
       var self = this;
-      self.tasks = localStorage.get('ZenTask-Task');
+      var tasks = localStorage.get('ZenTask-Task');
+      if (tasks) {
+        self.tasks = tasks;
+      }
       $(".button-collapse").sideNav();
       $(".dropdown-button").dropdown();
-      setTimeout(function() {
-        //$('.modal-trigger').leanModal({opacity: .6, in_duration: 100, out_duration: 100});
-      }, 500);
+      $('.modal-trigger').leanModal({opacity: .6, in_duration: 200, out_duration: 200});
 
       self.setUpdateTask();
       $(window).on("beforeunload",function(e){ self.saveTask(); });
@@ -96,6 +97,57 @@ $(function() {
       sortBy: function(key) {
         this.sortKey = key;
         this.isReverse[key] = !this.isReverse[key]
+      },
+      resetTime() {
+        $.each(this.$children, function() {
+          this.task.time = '00:00:00';
+        });
+      },
+      downloadCsv: function() {
+        var csvData = [];
+        csvData.push('id,プロジェクト,ユーザ,チケットＩＤ,稼働時間,コメント,行動,日付');
+        var today = Date.getCurrentDate('/', false);
+        $.each(this.$children, function() {
+          var taskTodayTime = this.task.time;
+          var times = taskTodayTime.split(':');
+          var hun = parseInt(times[1]);
+          var hunMap = {};
+          var Z60 = Math.abs(60 - hun);
+          var Z45 = Math.abs(45 - hun);
+          var Z30 = Math.abs(30 - hun);
+          var Z15 = Math.abs(15 - hun);
+          var Z00 = Math.abs(0 - hun);
+          hunMap[Z60] = 60;
+          hunMap[Z45] = 45;
+          hunMap[Z30] = 30;
+          hunMap[Z15] = 15;
+          hunMap[Z00] = 0;
+          var hunKinjichi = Math.min.apply(null, [Z60,Z45,Z30,Z15,Z00]);
+          var taskTimeForRedmine = (parseInt(times[0]*60) + hunMap[hunKinjichi]) / 60;
+          if (taskTimeForRedmine === 0) {
+            return true;//continueと同じ
+          }
+          var task = [
+              '',//id は空にしておく
+              this.task.projectName,
+              this.task.worker,
+              this.task.ticketId,
+              taskTimeForRedmine,
+              '', //comment
+              this.task.code,
+              today,
+          ];
+          csvData.push(task.join(','));
+          }
+        );
+
+        // 指定されたデータを保持するBlobを作成する。
+        var blob = new Blob([ csvData.join("\n") ], { "type" : "application/x-msdownload" });
+        // Aタグのhref属性にBlobオブジェクトを設定し、リンクを生成
+        window.URL = window.URL || window.webkitURL;
+        var $target = $("#csvFile");
+        location.download = 'test.txt';//TODO ファイル名がつかない（
+        location.href = window.URL.createObjectURL(blob);
       },
       toggleTime(elem) {
         var countTime = function(startTime) {

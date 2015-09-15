@@ -1,8 +1,3 @@
-//card-contentのpadding調整
-.card .card-content {
-    padding: 25px;
-    border-radius: 0 0 2px 2px;
-}
 .brand-logo {
   padding-left: 20px;
 }
@@ -11,7 +6,7 @@
     display: inline-flex;
     padding: 0px 20px;
     i {
-      padding: 0px 9px;  
+      padding: 0px 9px;
     }
   }
 }
@@ -38,20 +33,22 @@ main {
 	.card-title {
     margin: 0px;
     color: gray;
-		border-bottom: solid 2px $themeColorLight;
+		border-bottom: solid 1px $themeColorLight;
+    font-size: 18px;
 	}
 	.card-time {
     color: gray;
-		font-size: 25px;
+		font-size: 18px;
 		padding: 10px 0px;
 		i {
 			vertical-align: top;
-			font-size: 35px;
-			padding: 0px 10px 0px 0px;
+			font-size: 24px;
+			padding: 0px 5px 0px 0px;
 		}
 	}
 	.card-footer {
 		color: $textColorLight;
+    font-size: 11px;
     display: inline-flex;
     input {
       height: 20px;
@@ -61,8 +58,8 @@ main {
     }
 	}
 	.deleteBtn {
-		margin: -15px -3px;
-		font-size: 25px;
+		margin: -15px 0px;
+		font-size: 17px;
 		color: $textColorLight;
 	}
 }
@@ -94,6 +91,7 @@ main {
   color: coral;
   background-color: #E5FFE6;
   .card-time {
+    color: coral;
     letter-spacing: 10px;
 	  transition-property: all;
   	transition-duration: 0.3s;
