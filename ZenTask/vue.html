@@ -15,11 +15,12 @@
     <div class="nav-wrapper">
       <a href="#!" class="brand-logo"><img src="img/logo_red.png" width="0">ZenTask</a>
       <ul class="headNav right hide-on-med-and-down">
-        <li></li>
 				<li class="modal-trigger waves-effect waves-light" href="#resetModal"><i class="material-icons small">schedule</i>Reset Time</li>
 				<li class="modal-trigger waves-effect waves-light" href="#downloadCsvModal"><i class="fa fa-download"></i> CSV Download</li>
+        <li class="waves-effect waves-light dropdown-button" data-activates="modeMenu"><i class="fa fa-list"></i>Mode</li>
         <li class="waves-effect waves-light"><i class="fa fa-lightbulb-o"></i>How To</li>
-        <li class="waves-effect waves-light dropdown-button" data-activates="modeMenu"><i class="material-icons">arrow_drop_down</i>Mode</li>
+        <li class="waves-effect waves-light"><i class="fa fa-question"></i>FAQ</li>
+        <li class="waves-effect waves-light"><i class="material-icons">email</i>Contact</li>
         <ul id="modeMenu" class="dropdown-content">
           <li><a href="#!">Card</a></li>
           <li><a href="#!">Table</a></li>
@@ -32,7 +33,7 @@
   <main>
 		<section class="">
 		  <p class="btn-floating btn-large waves-effect waves-light orange" v-on="click: addTask()"><i class="material-icons">add</i></p>
-		  <div class="row animatedParent animateOnce" data-sequence="50">
+		  <div class="row animatedParent animateOnce" data-sequence="100">
 		    <div class="col" v-repeat="task:tasks">
 		      <div class="card hoverable z-depth-1 animated flipInY " data-id="{{$index}}">
             <div class="sashWrap" style='display:none'>
