@@ -31,16 +31,25 @@
   </nav>
   </header>
   <main>
+		<nav class="serachNav orange lighten-2">
+			<div class="nav-wrapper">
+				 <div class="input-field">
+					 <input id="search" type="search" required name="query" v-model="filterKey" v-on="keyup: watchCardDisp()">
+					 <label for="search"><i class="material-icons">search</i></label>
+				 </div>
+		  </div>
+		</nav>
+		<p class="btn-floating btn-large waves-effect waves-light orange" v-on="click: addTask()"><i class="material-icons">add</i></p>
 		<section class="">
-		  <p class="btn-floating btn-large waves-effect waves-light orange" v-on="click: addTask()"><i class="material-icons">add</i></p>
-		  <div class="row animatedParent animateOnce" data-sequence="100">
-		    <div class="col" v-repeat="task:tasks">
+
+		  <div class="row animatedParent animateOnce" data-sequence="20">
+		    <div class="col" v-repeat="task:tasks | filterBy filterKey">
 		      <div class="card hoverable z-depth-1 animated flipInY " data-id="{{$index}}">
             <div class="sashWrap" style='display:none'>
               <p class="sash">Active</p>
             </div>
 		        <div class="card-content " v-class="active: task.isActive">
-		          <a class="deleteBtn right waves-effect waves-light" href="#" v-on="click: deleteTask($index)" ><i class="fa fa-times-circle"></i></a>
+		          <a class="deleteBtn right waves-effect waves-light" href="#" v-on="click: deleteTask(task.id)" ><i class="fa fa-times-circle"></i></a>
 		          <input class="card-title edit validate" v-model="task.title" placeholder="タスク名" type="text"></input>
 		          <p class="card-time" v-on="click: toggleTime(this, $index)"><i class="material-icons small">schedule</i><span>{{task.time}}</span></p>
 		          <p class="right card-footer">
@@ -111,7 +120,6 @@
 			</div>
 		</div>
 	</section>
-
 
 	<script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>

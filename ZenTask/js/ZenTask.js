@@ -1,20 +1,12 @@
 $(function() {
   Vue.config.debug = false;
-
   var app = new Vue({
     el: '#app',
     data: {
-      disp: {
-        projectName: true,
-        ticketId: true,
-        title: true,
-        code: true,
-        time: true
-      },
+      idSeq: 0,
       tasks: [],
       sortKey: '',
       filterKey: '',
-      searchQuery: '',
       isReverse: {
         projectName: false,
         ticketId: false,
@@ -25,6 +17,10 @@ $(function() {
     },
     created: function() {
       var self = this;
+      var idSeq = localStorage.get('ZenTask-ID');
+      if (idSeq) {
+        self.idSeq = idSeq;
+      }
       var tasks = localStorage.get('ZenTask-Task');
       if (tasks) {
         self.tasks = tasks;
@@ -41,6 +37,7 @@ $(function() {
         var self = this;
         self.tasks.unshift(
           {
+            id: self.idSeq++,
             projectName: 'ProjectName',
             ticketId: 'Ticket ID',
             title: '',
@@ -79,17 +76,26 @@ $(function() {
           this.deleteTarget = false;
         });
         localStorage.set('ZenTask-Task', this.tasks);
+        localStorage.set('ZenTask-ID', this.idSeq);
       },
       editTask: function(elem) {
       },
       openDeleteModal: function(index) {
         this.tasks[index].deleteTarget = true;
       },
-      deleteTask: function(index) {
-		    if (confirm('削除しますか。') === false) {
-			    return false;
-		    }
-        this.tasks.$remove(index);
+      deleteTask: function(id) {
+        var self = this;
+        if (confirm('削除しますか。') === false) {
+          return false;
+        }
+        return false;
+        $.each(self.$children, function(index) {
+          if (this.task.id === id) {
+            $(this.$el).hide(300, function() {
+              self.tasks.$remove(index);
+            });
+          }
+        });
       },
       doneTask: function(elem) {
         elem.isDone = true;
@@ -175,6 +181,9 @@ $(function() {
         var times = elem.task.time.split(':');
         var countTimeMillSec = parseInt(times[0]*60*60*1000) - parseInt(times[1]*60*1000) - parseInt(times[2]*1000); // 通算ミリ秒計算
         countTime(Date.now() + countTimeMillSec);
+      },
+      watchCardDisp() {
+        $('.card').addClass('go');
       }
     }
   });

@@ -10,6 +10,9 @@
   .headNav li i {
     padding: 0px 9px; }
 
+.serachNav {
+  width: 30%; }
+
 body {
   background-color: #F4F4F4;
   -webkit-transition-property: all;
