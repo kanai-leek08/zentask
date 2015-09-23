@@ -1,5 +1,18 @@
+#toast {
+  text-align: center;
+  height: 40px;
+  background-color: #8CACAA;
+  line-height: 3;
+  color: white;
+  opacity: 0.8; }
+
 .brand-logo {
-  padding-left: 20px; }
+  margin-left: 20px;
+  position: relative; }
+  .brand-logo span {
+    position: absolute;
+    top: 4px;
+    left: 60px; }
 
 .headNav li {
   display: -webkit-inline-box;
@@ -10,8 +23,19 @@
   .headNav li i {
     padding: 0px 9px; }
 
-.serachNav {
-  width: 30%; }
+.search {
+  margin: 10px;
+  display: inline-block;
+  width: 30%;
+  position: relative; }
+  .search label {
+    position: absolute;
+    top: 10px; }
+  .search input {
+    padding-left: 30px; }
+
+.addBtn {
+  margin-left: 30px; }
 
 body {
   background-color: #F4F4F4;
@@ -25,39 +49,43 @@ body {
 main {
   margin: 20px; }
 
-.card .card-content {
+.task.col {
+  padding: 0px 5px; }
+
+.task .card {
+  margin: 8px;
   width: 100%; }
-  .card .card-content:hover {
+  .task .card:hover {
     background-color: #F2FFF6; }
-  .card .card-content .card-title {
+  .task .card .card-header {
+    margin: -15px 0px; }
+    .task .card .card-header .card-id {
+      color: #8CACAA; }
+    .task .card .card-header .deleteBtn {
+      color: #B2DFDB; }
+  .task .card .card-title {
     margin: 0px;
     color: gray;
     border-bottom: solid 1px #009587;
     font-size: 18px; }
-  .card .card-content .card-time {
+  .task .card .card-time {
     color: gray;
     font-size: 18px;
-    padding: 10px 0px; }
-    .card .card-content .card-time i {
+    padding-top: 10px; }
+    .task .card .card-time i {
       vertical-align: top;
       font-size: 24px;
       padding: 0px 5px 0px 0px; }
-  .card .card-content .card-footer {
+  .task .card .card-footer {
     color: #B2DFDB;
-    font-size: 11px;
-    display: -webkit-inline-box;
-    display: -webkit-inline-flex;
-    display: -ms-inline-flexbox;
-    display: inline-flex; }
-    .card .card-content .card-footer input {
+    font-size: 11px; }
+    .task .card .card-footer input {
       height: 20px;
       margin: 0px;
       width: 20%;
       text-align: center; }
-  .card .card-content .deleteBtn {
-    margin: -15px 0px;
-    font-size: 17px;
-    color: #B2DFDB; }
+    .task .card .card-footer p {
+      text-align: right; }
 
 .sashWrap {
   position: absolute;
@@ -70,7 +98,7 @@ main {
 .sash {
   position: absolute;
   z-index: 5;
-  top: px;
+  top: 0px;
   left: -50px;
   width: 150px;
   padding: 0px 0px 0px 57px;
@@ -83,10 +111,10 @@ main {
       -ms-transform: rotate(-26deg);
           transform: rotate(-26deg); }
 
-.card .card-content.active {
+.task .card.active {
   color: coral;
   background-color: #E5FFE6; }
-  .card .card-content.active .card-time {
+  .task .card.active .card-time {
     color: coral;
     letter-spacing: 10px;
     -webkit-transition-property: all;
@@ -95,3 +123,30 @@ main {
             transition-duration: 0.3s;
     -webkit-transition-timing-function: ease-out;
             transition-timing-function: ease-out; }
+
+.modal h4 {
+  font-size: 20px;
+  color: gray;
+  margin: 0px; }
+
+.updateModal .row {
+  margin-left: 60px; }
+
+.updateModal .code {
+  font-size: 12px;
+  color: #9F9F9F;
+  text-align: left; }
+  .updateModal .code select {
+    font-size: 14px;
+    color: black;
+    border: none;
+    border-bottom: solid 2px #4CAF50;
+    background-color: transparent; }
+
+.fade-transition {
+  -webkit-transition: all 0.3s ease;
+          transition: all 0.3s ease;
+  overflow: hidden; }
+
+.fade-enter, .fade-leave {
+  opacity: 0; }

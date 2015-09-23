@@ -1,5 +1,23 @@
+$textColorLight: #B2DFDB;
+$themeColorLight: #009587;
+
+#toast {
+  text-align: center;
+  height: 40px;
+  background-color: #8CACAA;
+  line-height: 3;
+  color: white;
+  opacity: 0.8;
+}
+
 .brand-logo {
-  padding-left: 20px;
+  margin-left: 20px;
+  position: relative;;
+  span {
+    position: absolute;
+    top: 4px;
+    left: 60px;
+  }
 }
 .headNav {
   li {
@@ -10,13 +28,22 @@
     }
   }
 }
-.serachNav {
+.search{
+  margin: 10px;
+  display: inline-block;
   width: 30%;
+  position: relative;
+  label {
+    position: absolute;
+    top: 10px;
+  }
+  input {
+    padding-left: 30px;
+  }
 }
-
-$textColorLight: #B2DFDB;
-$themeColorLight: #009587;
-
+.addBtn {
+  margin-left: 30px;
+}
 body {
 	background-color: #F4F4F4;
 	transition-property: all;
@@ -27,44 +54,56 @@ main {
   margin: 20px;
 }
 
-.card .card-content {
-  width: 100%;
+.task.col {
+  padding: 0px 5px;
+}
+.task {
+ .card {
+    margin: 8px;
+    width: 100%;
 
-  &:hover {
-    background-color: #F2FFF6;
-  }
-	.card-title {
-    margin: 0px;
-    color: gray;
-		border-bottom: solid 1px $themeColorLight;
-    font-size: 18px;
-	}
-	.card-time {
-    color: gray;
-		font-size: 18px;
-		padding: 10px 0px;
-		i {
-			vertical-align: top;
-			font-size: 24px;
-			padding: 0px 5px 0px 0px;
-		}
-	}
-	.card-footer {
-		color: $textColorLight;
-    font-size: 11px;
-    display: inline-flex;
-    input {
-      height: 20px;
-      margin: 0px;
-      width: 20%;
-      text-align: center;
+    &:hover {
+      background-color: #F2FFF6;
     }
-	}
-	.deleteBtn {
-		margin: -15px 0px;
-		font-size: 17px;
-		color: $textColorLight;
-	}
+    .card-header {
+      margin: -15px 0px;
+      .card-id {
+        color: #8CACAA;
+      }
+      .deleteBtn {
+    		color: $textColorLight;
+      }
+    }
+  	.card-title {
+      margin: 0px;
+      color: gray;
+  		border-bottom: solid 1px $themeColorLight;
+      font-size: 18px;
+  	}
+  	.card-time {
+      color: gray;
+  		font-size: 18px;
+  		padding-top: 10px;
+  		i {
+  			vertical-align: top;
+  			font-size: 24px;
+  			padding: 0px 5px 0px 0px;
+  		}
+  	}
+  	.card-footer {
+  		color: $textColorLight;
+      font-size: 11px;
+      input {
+        height: 20px;
+        margin: 0px;
+        width: 20%;
+        text-align: center;
+      }
+      p {
+        text-align: right;
+      }
+  	}
+  }
 }
 
 .sashWrap {
@@ -78,7 +117,7 @@ main {
 .sash {
 	position: absolute;
 	z-index: 5;
-	top: px;
+	top: 0px;
 	left: -50px;
 	width: 150px;
 	padding: 0px 0px 0px 57px;
@@ -90,7 +129,7 @@ main {
 	transform: rotate(-26deg);
 }
 
-.card .card-content.active {
+.task .card.active {
   color: coral;
   background-color: #E5FFE6;
   .card-time {
@@ -100,4 +139,37 @@ main {
   	transition-duration: 0.3s;
   	transition-timing-function: ease-out;
   }
+}
+.modal {
+  h4 {
+    font-size: 20px;
+    color: gray;
+    margin: 0px;
+  }
+}
+.updateModal {
+  .row {
+    margin-left: 60px;
+  }
+  .code {
+    font-size: 12px;
+    color: #9F9F9F;
+    text-align: left;
+    select {
+      font-size: 14px;
+      color: black;
+      border: none;
+      border-bottom: solid 2px #4CAF50;
+      background-color: transparent;
+    }
+  }
+}
+
+//VUE アニーション定義
+.fade-transition {
+    transition: all .3s ease;
+    overflow: hidden;
+}
+.fade-enter, .fade-leave {
+    opacity: 0;
 }

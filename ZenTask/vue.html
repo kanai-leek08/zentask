@@ -13,12 +13,15 @@
   <header>
   <nav class="teal">
     <div class="nav-wrapper">
-      <a href="#!" class="brand-logo"><img src="img/logo_red.png" width="0">ZenTask</a>
+      <div class="brand-logo">
+				<img src="img/logo_white.png" width="60">
+				<span>enTask</span>
+			</div>
       <ul class="headNav right hide-on-med-and-down">
 				<li class="modal-trigger waves-effect waves-light" href="#resetModal"><i class="material-icons small">schedule</i>Reset Time</li>
 				<li class="modal-trigger waves-effect waves-light" href="#downloadCsvModal"><i class="fa fa-download"></i> CSV Download</li>
         <li class="waves-effect waves-light dropdown-button" data-activates="modeMenu"><i class="fa fa-list"></i>Mode</li>
-        <li class="waves-effect waves-light"><i class="fa fa-lightbulb-o"></i>How To</li>
+        <li class="modal-trigger waves-effect waves-light" href="#howToModal"><i class="fa fa-lightbulb-o"></i>How To</li>
         <li class="waves-effect waves-light"><i class="fa fa-question"></i>FAQ</li>
         <li class="waves-effect waves-light"><i class="material-icons">email</i>Contact</li>
         <ul id="modeMenu" class="dropdown-content">
@@ -31,41 +34,69 @@
   </nav>
   </header>
   <main>
-		<nav class="serachNav orange lighten-2">
-			<div class="nav-wrapper">
-				 <div class="input-field">
-					 <input id="search" type="search" required name="query" v-model="filterKey" v-on="keyup: watchCardDisp()">
-					 <label for="search"><i class="material-icons">search</i></label>
-				 </div>
-		  </div>
-		</nav>
-		<p class="btn-floating btn-large waves-effect waves-light orange" v-on="click: addTask()"><i class="material-icons">add</i></p>
-		<section class="">
-
+		<p class="addBtn btn-floating btn waves-effect waves-light orange" v-on="click: addTask()"><i class="material-icons">add</i></p>
+		<div class="search">
+			<input id="search" type="search" required name="query" v-model="filterKey" v-on="keyup: watchCardDisp()">
+			<label for="search"><i class="material-icons">search</i></label>
+		</div>
+		<section class="cardSection">
 		  <div class="row animatedParent animateOnce" data-sequence="20">
-		    <div class="col" v-repeat="task:tasks | filterBy filterKey">
-		      <div class="card hoverable z-depth-1 animated flipInY " data-id="{{$index}}">
+		    <div class="col task" v-repeat="task:tasks | filterBy filterKey" v-transition="fade" stagger="10">
+		      <div class="card hoverable z-depth-1 animated flipInY " v-class="active: task.isActive" data-id="{{$index}}">
             <div class="sashWrap" style='display:none'>
               <p class="sash">Active</p>
             </div>
-		        <div class="card-content " v-class="active: task.isActive">
-		          <a class="deleteBtn right waves-effect waves-light" href="#" v-on="click: deleteTask(task.id)" ><i class="fa fa-times-circle"></i></a>
+		        <div class="card-content">
+							<p class="card-header">
+								<span class="card-id">No.{{task.id}}</span>
+			          <span class="modal-trigger deleteBtn right waves-effect waves-light" href="#deleteModal{{$index}}"><i class="fa fa-times-circle"></i></span>
+							</p>
 		          <input class="card-title edit validate" v-model="task.title" placeholder="タスク名" type="text"></input>
 		          <p class="card-time" v-on="click: toggleTime(this, $index)"><i class="material-icons small">schedule</i><span>{{task.time}}</span></p>
-		          <p class="right card-footer">
-		            <span class="card-projectName">{{task.projectName}}</span>
-		             / <span class="card-ticketId">{{task.ticketId}}</span>
-		             / <span class="card-worker">{{task.worker}}</span>
-		             /<span class="card-code">{{task.code}}</span>
-		          </p>
+		          <div class="modal-trigger right card-footer" href="#updateModal{{$index}}">
+		            <p><span class="card-projectName">{{task.projectName}}</span>/<span class="card-ticketId">{{task.ticketId}}</span>
+		            <p><span class="card-worker">{{task.worker}}</span>/<span class="card-code">{{task.code}}</span></p>
+		          </div>
 		        </div>
 		      </div>
+					<div id="updateModal{{$index}}" class="updateModal modal">
+						<div class="modal-content center">
+							<h4>詳細情報</h4>
+							<div class="center">
+								<div class="row">
+								  <div class="input-field col s10">
+										 <input placeholder="" id="projectName" v-model="task.projectName" type="text" class="validate">
+										 <label for="projectName">Project Name</label>
+									 </div>
+								</div>
+								<div class="row code">
+								  <div class="input-field col s10">
+										<span>Cost Code</span>
+										<select class="browser-default" v-model="task.code" options="costCodeList"></select>
+									</div>
+								</div>
+								<div class="row">
+								  <div class="input-field col s10">
+										 <input placeholder="" id="ticketId" v-model="task.ticketId" type="text" class="validate">
+										 <label for="ticketId">Ticket ID</label>
+									 </div>
+								</div>
+								<div class="row">
+								  <div class="input-field col s10">
+										 <input placeholder="" id="worker" v-model="task.worker" type="text" class="validate">
+										 <label for="worker">Worker</label>
+									 </div>
+								</div>
+								<p class="btn modal-action modal-close waves-effect waves-green">Close</p>
+							</div>
+						</div>
+					</div>
           <div id="deleteModal{{$index}}" class="modal">
             <div class="modal-content center">
               <h4>このタスクを削除してもよろしいですか？</h4>
             </div>
             <div class="center">
-              <p class="btn modal-action modal-close waves-effect waves-green" v-on="click: deleteTask()">OK</p>
+              <p class="btn modal-action modal-close waves-effect waves-green" v-on="click: deleteTask($index)">OK</p>
               <p class="btn modal-action modal-close waves-effect waves-green">キャンセル</p>
             </div>
           </div>
@@ -102,7 +133,7 @@
 	<section class='modalSection'>
 		<div id="resetModal" class="modal">
 			<div class="modal-content center">
-				<h4>作業時間をリセットしてもよろしいですか？</h4>
+				<h4>作業工数をリセットしてもよろしいですか？</h4>
 			</div>
 			<div class="center">
 				<p class="btn modal-action modal-close waves-effect waves-green" v-on="click: resetTime()">OK</p>
@@ -111,12 +142,19 @@
 		</div>
 		<div id="downloadCsvModal" class="modal">
 			<div class="modal-content center">
-				<h4>CSVをダウンロードしますか？</h4>
+				<h4>作業工数CSVをダウンロードしますか？</h4>
 			</div>
 			<div class="center">
 				<p class="btn modal-action modal-close waves-effect waves-green" v-on="click: downloadCsv()">OK</p>
 				<p class="btn modal-action modal-close waves-effect waves-green">キャンセル</p>
 				<a id='csvFile'></a>
+			</div>
+		</div>
+		<div id="howToModal" class="modal">
+			<div class="modal-content center">
+				<h4>作業工数をリセットしてもよろしいですか？</h4>
+			</div>
+			<div class="center">
 			</div>
 		</div>
 	</section>
@@ -127,8 +165,5 @@
 	<script src='js/lib/css3-animate-it.js'></script>
 	<script type='text/javascript' src='js/KMJS.js'></script>
 	<script type='text/javascript' src='js/ZenTask.js'></script>
-  <script>
-    $(".button-collapse").sideNav();
-  </script>
 </body>
 </html>

@@ -1,5 +1,4 @@
 $(function() {
-  Vue.config.debug = false;
   var app = new Vue({
     el: '#app',
     data: {
@@ -13,7 +12,34 @@ $(function() {
         title: false,
         code: false,
         time: false
-      }
+      },
+      costCodeList: [
+        { text: '100:要件定義', value: '100:要件定義' },
+        { text: '2xx:設計全般', value: '2xx:設計全般' },
+        { text: '201:基本設計', value: '201:基本設計' },
+        { text: '291:基本設計レビュー', value: '291:基本設計レビュー' },
+        { text: '203:詳細設計', value: '203:詳細設計' },
+        { text: '293:詳細設計レビュー', value: '293:詳細設計' },
+        { text: '3xx:開発全般', value: '3xx:開発全般' },
+        { text: '301:コード化', value: ' 301:コード化' },
+        { text: '391:コードレビュー', value: ' 391:コードレビュー' },
+        { text: '303:単体バグ対応コード化', value: ' 303:単体バグ対応コード化' },
+        { text: '393:単体バグ対応コードレビュー', value: ' 393:単体バグ対応コードレビュー' },
+        { text: '305:結合バグ対応コード化', value: ' 305:結合バグ対応コード化' },
+        { text: '395:結合バグ対応コードレビュー', value: ' 395:結合バグ対応コードレビュー' },
+        { text: '401:単体テスト', value: ' 401:単体テスト' },
+        { text: '402:結合テスト', value: ' 402:結合テスト' },
+        { text: '403:総合テスト', value: ' 403:総合テスト' },
+        { text: '501:現調・立合', value: ' 501:現調・立合' },
+        { text: '503:単体テスト仕様書作成', value: ' 503:単体テスト仕様書作成' },
+        { text: '593:単体テスト仕様書作成レビュー', value: ' 593:単体テスト仕様書作成レビュー' },
+        { text: '504:納品ドキュメント', value: ' 504:納品ドキュメント' },
+        { text: '505:結合テスト仕様書作成', value: ' 505:結合テスト仕様書作成' },
+        { text: '595:結合テスト仕様書作成レビュー', value: ' 595:結合テスト仕様書作成レビュー' },
+        { text: '506:総合テスト仕様書作成', value: ' 506:総合テスト仕様書作成' },
+        { text: '596:総合テスト仕様書作成レビュー', value: ' 596:総合テスト仕様書作成レビュー' },
+        { text: '600:間接', value: ' 600:間接' },
+      ]
     },
     created: function() {
       var self = this;
@@ -27,9 +53,10 @@ $(function() {
       }
       $(".button-collapse").sideNav();
       $(".dropdown-button").dropdown();
-      $('.modal-trigger').leanModal({opacity: .6, in_duration: 200, out_duration: 200});
-
-      self.setUpdateTask();
+      setTimeout(function(){
+        $('.modal-trigger').leanModal({opacity: .6, in_duration: 200, out_duration: 200});
+        $('select').material_select();
+      }, 100);
       $(window).on("beforeunload",function(e){ self.saveTask(); });
     },
     methods:{
@@ -41,7 +68,7 @@ $(function() {
             projectName: 'ProjectName',
             ticketId: 'Ticket ID',
             title: '',
-            code: 'CostCode',
+            code: '100:要件定義',
             worker: 'Worker',
             time: '00:00:00',
             timerObj: null,
@@ -51,23 +78,9 @@ $(function() {
         );
         setTimeout(function(){
           $('.card[data-id=0]').addClass('go');
+          $('select').material_select();
           $('.modal-trigger').leanModal({opacity: .6, in_duration: 100, out_duration: 100});
         }, 100);
-      },
-      setUpdateTask: function(){
-        $('#div802').click(function() {
-          $('#div802').css( 'display', 'none');
-          $('#div802-edit')
-              .val( $( '#div802').text())
-              .css( 'display', '')
-              .focus();
-        });
-        $('#div802-edit').blur(function() {
-            $('#div802-edit').css( 'display', 'none');
-            $('#div802')
-                .text($('#div802-edit').val())
-                .css( 'display', '');
-        });
       },
       saveTask: function(){
         $.each(this.tasks, function() {
@@ -83,19 +96,10 @@ $(function() {
       openDeleteModal: function(index) {
         this.tasks[index].deleteTarget = true;
       },
-      deleteTask: function(id) {
+      deleteTask: function(index) {
         var self = this;
-        if (confirm('削除しますか。') === false) {
-          return false;
-        }
-        return false;
-        $.each(self.$children, function(index) {
-          if (this.task.id === id) {
-            $(this.$el).hide(300, function() {
-              self.tasks.$remove(index);
-            });
-          }
-        });
+        self.tasks.$remove(index);
+        self.showToast('タスクを削除しました');
       },
       doneTask: function(elem) {
         elem.isDone = true;
@@ -104,12 +108,18 @@ $(function() {
         this.sortKey = key;
         this.isReverse[key] = !this.isReverse[key]
       },
+      showToast: function(msg) {
+        Materialize.toast(msg, 2000)
+      },
       resetTime() {
+        var self = this;
         $.each(this.$children, function() {
           this.task.time = '00:00:00';
         });
+        self.showToast('作業工数をリセットしました');
       },
       downloadCsv: function() {
+        var self = this;
         var csvData = [];
         csvData.push('id,プロジェクト,ユーザ,チケットＩＤ,稼働時間,コメント,行動,日付');
         var today = Date.getCurrentDate('/', false);
@@ -151,9 +161,12 @@ $(function() {
         var blob = new Blob([ csvData.join("\n") ], { "type" : "application/x-msdownload" });
         // Aタグのhref属性にBlobオブジェクトを設定し、リンクを生成
         window.URL = window.URL || window.webkitURL;
-        var $target = $("#csvFile");
-        location.download = 'test.txt';//TODO ファイル名がつかない（
-        location.href = window.URL.createObjectURL(blob);
+        var elem = document.createElement('a');
+        elem.download = 'Redmine工数_20150909.csv';
+        elem.href = window.URL.createObjectURL(blob);
+        elem.click();
+
+        self.showToast('CSVをダウンロードしました');
       },
       toggleTime(elem) {
         var countTime = function(startTime) {
@@ -169,6 +182,12 @@ $(function() {
             countTime(startTime);
           }, 1000);
         };
+
+        //Activeなカードがクリックされた場合は処理しない
+        if (elem.task.isActive) {
+          return false;
+        }
+
         //タイマーリセット処理
         $.each(this.$children, function() {
           clearTimeout(this.task.timerObj);
@@ -176,6 +195,7 @@ $(function() {
         });
         $('.sashWrap').hide(400);
 
+        //タイマーセット処理
         elem.task.isActive = true;
         $('.sashWrap' ,elem.$el).show(400);
         var times = elem.task.time.split(':');
@@ -183,7 +203,10 @@ $(function() {
         countTime(Date.now() + countTimeMillSec);
       },
       watchCardDisp() {
+        //検索して非表示→表示になった際にイベント再設定
         $('.card').addClass('go');
+        $('.modal-trigger').leanModal({opacity: .6, in_duration: 100, out_duration: 100});
+        $('select').material_select();
       }
     }
   });
