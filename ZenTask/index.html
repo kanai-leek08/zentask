@@ -1,250 +1,175 @@
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta charset='UTF8'>
-<title>ZenTask</title>
-<link rel="shortcut icon" href="img/favicon.ico" />
-<link rel='stylesheet' href='http://yui.yahooapis.com/pure/0.2.0/pure-min.css'>
-<link rel='stylesheet' href='css/common.css'>
-<link rel='stylesheet' href='css/Kanatis.css'>
-<link rel='stylesheet' href='css/lib/bxslider.css'>
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<script type='text/javascript' src='http://code.jquery.com/jquery-1.9.1.min.js'></script>
-<script src='http://code.jquery.com/ui/1.9.1/jquery-ui.js'></script>
-<script type='text/javascript' src='js/KMJS.js'></script>
-<script type='text/javascript' src='js/Kanatis.js'></script>
-<script type='text/javascript' src='js/lib/bxslider.min.js'></script>
-
-<script>
-$(function(){
-	new Kanatis();
-});
-</script>
-
+	<link rel="stylesheet" href="/css/materialize.css" media="screen,projection">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel='stylesheet' href='css/lib/animations.css'>
+	<link rel='stylesheet' href='/css/ZenTask.css'>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta charset="UTF-8">
 </head>
-<body>
-<header>
-	<div><img src='img/logo_red.png' width=70 height=70><p>ZenTask</p></div>
-</header>
-<div id="menu" class="">
-	<section id='formSection'>
-		<div id='newTaskForm' class=''>
-			<div class='fl fs26 formTitle'>
-				<p style='display: none;'>NEW<br>TASK</p>
-				<img src='img/newTask.png'>
+<body id="app">
+  <header>
+  <nav class="teal">
+    <div class="nav-wrapper">
+      <div class="brand-logo">
+				<img src="img/logo_white.png" width="60">
+				<span>enTask</span>
 			</div>
-			<form class='pure-form pure-form-stacked' onsubmit='return false;'>
-				<fieldset class='pt10 inputFieldSet'>
-					<div class='pure-control-group'>
-						<input id='projectName' class='w160' required placeholder='プロジェクト名' class='' type='text'>
-					</div>
-					<div class='pure-control-group'>
-						<input id='sagyosha' class='w160' required placeholder='作業者名' class='' type='text'>
-					</div>
-					<div class='pure-control-group'>
-						<input id='ticketID' class='w160' required placeholder='チケットID' class='' type='text'>
-					</div>
-					<div class='pure-control-group'>
-						<input id='newTaskTitle' class='w160' required placeholder='タイトル' class='' type='text'>
-					</div>
-					<div class='pure-control-group'>
-						<select id='taskCostCode' class='w160' placeholder='category'>
-<option value="0">100:要件定義</option>
-<option value="1">2xx:設計全般</option>
-<option value="2">201:基本設計</option>
-<option value="3">291:基本設計レビュー</option>
-<option value="4">203:詳細設計</option>
-<option value="5">293:詳細設計レビュー</option>
-<option value="6">3xx:開発全般</option>
-<option value="7">301:コード化</option>
-<option value="9">391:コードレビュー</option>
-<option value="10">303:単体バグ対応コード化</option>
-<option value="11">393:単体バグ対応コードレビュー</option>
-<option value="12">305:結合バグ対応コード化</option>
-<option value="13">395:結合バグ対応コードレビュー</option>
-<option value="14">401:単体テスト</option>
-<option value="15">402:結合テスト</option>
-<option value="16">403:総合テスト</option>
-<option value="17">501:現調・立合</option>
-<option value="18">503:単体テスト仕様書作成</option>
-<option value="19">593:単体テスト仕様書作成レビュー</option>
-<option value="20">504:納品ドキュメント</option>
-<option value="21">505:結合テスト仕様書作成</option>
-<option value="22">595:結合テスト仕様書作成レビュー</option>
-<option value="23">506:総合テスト仕様書作成</option>
-<option value="24">596:総合テスト仕様書作成レビュー</option>
-<option value="25">600:間接</option>
-						</select>
-					</div>
-					<div class='pure-control-group'>
-						<input id='taskYoteiTime' class='w160' required placeholder='予定時間' class='' type='text'>
-					</div>
-					<div class='pure-controls'>
-						<button id='addTaskBtn' class='w160' style='font-size:16px;'><i class="fa fa-plus-square-o"></i> Add Task</button>
-					</div>
-				</fieldset>
-			</form>
-		</div>
-	<button id='showCommentBtn' class='menuBtn pure-button showCommentAll '><i class="fa fa-expand fs50"></i><br>Show</button>
-	<button id='hideCommentBtn' class='menuBtn pure-button hideCommentAll '><i class="fa fa-compress fs50"></i><br>Hide</button>
-	<button id='downloadBtn' class='menuBtn pure-button downloadCsv'><i class="fa fa-download fs50"></i><br>CSV</button>
-	<button id='resetTodayTimeBtn' class='menuBtn pure-button'><i class="fa fa-clock-o fs50"></i><br>Reset</button>
-	<button id='howToBtn' class='menuBtn pure-button'><i class="fa fa-lightbulb-o fs50"></i><br>HowTo</button>
-	</section>
-</div>
-
-<div class='wall'></div>
-<section id='MstDomSection'>
-	<div id='taskObj' data-status='TODO' style='display:none;' class='task'>
-		<div class='taskHead bgDred'>
-			<div class="sashWrap" style='display:none'>
-				<p class="sash">Active</p>
-			</div>
-			<p class='taskDeleteBtn'><i class="fa fa-times-circle"></i></p>
-			<p class='tc'>
-				<b> <span class='projectName'></span></b>
-				<b>@<span class='ticketId'></span></b>
-				<b> <span class='sagyosha' style='display: none;'></span></b>
-			</p>
-		<hr class='dotLine'>
-			<table class='taskTable'>
-				<tbody>
-					<tr>
-						<td>タイトル</td>
-						<td><span class='taskTitle'></span></td>
-					</tr>
-					<tr>
-						<td>
-							コストコード
-						</td>
-						<td>						<select class='taskCostCode' class='w160' placeholder='category'>
-<option value="0">100:要件定義</option>
-<option value="1">2xx:設計全般</option>
-<option value="2">201:基本設計</option>
-<option value="3">291:基本設計レビュー</option>
-<option value="4">203:詳細設計</option>
-<option value="5">293:詳細設計レビュー</option>
-<option value="6">3xx:開発全般</option>
-<option value="7">301:コード化</option>
-<option value="9">391:コードレビュー</option>
-<option value="10">303:単体バグ対応コード化</option>
-<option value="11">393:単体バグ対応コードレビュー</option>
-<option value="12">305:結合バグ対応コード化</option>
-<option value="13">395:結合バグ対応コードレビュー</option>
-<option value="14">401:単体テスト</option>
-<option value="15">402:結合テスト</option>
-<option value="16">403:総合テスト</option>
-<option value="17">501:現調・立合</option>
-<option value="18">503:単体テスト仕様書作成</option>
-<option value="19">593:単体テスト仕様書作成レビュー</option>
-<option value="20">504:納品ドキュメント</option>
-<option value="21">505:結合テスト仕様書作成</option>
-<option value="22">595:結合テスト仕様書作成レビュー</option>
-<option value="23">506:総合テスト仕様書作成</option>
-<option value="24">596:総合テスト仕様書作成レビュー</option>
-<option value="25">600:間接</option>
-						</select></td>
-					</tr>
-					<tr>
-						<td>予定時間</td>
-						<td><span class='taskYoteiTime'></span></td>
-					</tr>
-					<tr>
-						<td>累計実績時間</td>
-						<td><span class='taskTotalTime'></span></td>
-					</tr>
-					<tr>
-						<td>今日の作業時間</td>
-						<td><span class=' taskTodayTime'>00:00:00</span></td>
-					</tr>
-				</tbody>
-			</table>
-			<p class='toggleComment'><i class="fa fa-plus"></i></p>
-		</div>
-		<div class='taskBody bgLred' style='display:none'>
-			<div class='commentBox'></div>
-			<div class='commentForm'>
-				<form onsubmit='return false;'>
-					<textarea class='commentTextarea' rows='1' cols='22'></textarea>
-					<button id='' class='pure-button addTaskCommentBtn'>
-						<i class="fa fa-comment-o"></i>
-					</button>
-				</form>
-			</div>
-		</div>
-	</div>
-	<div id='commentObj' class='comment' style='display: none;'>
-		<p class='commentDeleteBtn'><i class='fa fa-times'></i></p>
-		<pre class='commentBody'></pre>
-		<p class='date'></p>
-		<hr class='dotLine'>
-	</div>
-</section>
-
-<section id='taskSection' class='cb'>
-	<div class='cb'>
-		<div id='taskBox_TODO' class='taskBox' data-status='TODO'>
-		</div>
-	</div>
-	<div class='zeroHit'>
-
-	</div>
-</section>
-
-<section id='csvSection' class='modal' style='display: none;'>
-	<p class='closeModal'><i class="fa fa-times-circle"></i></p>
-    <p class='title'><span><i class="fa fa-file-text-o"></i>Task CSV</span></p>
-	<pre>
-	</pre>
-</section>
-
-<section id='howToSection' class='modal'>
-    <p class='closeModal'><i class="fa fa-times-circle"></i></p>
-    <div class='sliderBox'>
-        <div id="slider3">
-            <div class='page1'>
-                <p class='logo'><img src='img/logo_red.png'></p>
-                <p class='title'><span>Welcome ZenTask !!</span></p>
-            </div>
-            <div class='page2'>
-                <p class='title'><span>毎日の工数入力をラクに正確に。</span></p>
-                <div>
-                    <div class='body'>
-                        <i class="fa fa-clock-o fs60"></i>
-                        <p class='subTitle'>リアルタイム工数計測</p>
-                        <pre>
-リアルタイムでタスクに使った時間を計測し、実績時間の入力精度を向上。
-「この時間なにしてたっけ？」をなくします。
-                        </pre>
-                    </div>
-                    <div class='body'>
-                        <i class="fa fa-download fs60"></i>
-                        <p class='subTitle'>1日の実績を簡単Export</p>
-                        <pre>
-計測したその日の工数をCSV形式でExport。
-そのままRedmineにimport。入力時間を削減します。
-                        </pre>
-                    </div>
-                    <div class='body'>
-                        <i class="fa fa-pie-chart fs60"></i>
-                        <p class='subTitle'>毎日の予実確認</p>
-                        <pre>
-タスクの予定時間を入力し、実績と比較可能。
-予実振り返りに役立てます。
-                        </pre>
-                    </div>
-                </div>
-            </div>
-            <div class='page3'>
-                <div>
-                    <i class="fa fa-exclamation-triangle"></i>
-                    <p>ZenTaskは通信を行なわないオフラインアプリケーションです。</p>
-                    <p>データの保存はブラウザローカルストレージを利用しております。</p>
-                    <p>同一ブラウザでしかデータは読み込めないためご留意ください。</p>
-                </div>
-            </div>
-        </div>
+      <ul class="headNav right hide-on-med-and-down">
+				<li class="modal-trigger waves-effect waves-light" href="#resetModal"><i class="material-icons small">schedule</i>Reset Time</li>
+				<li class="modal-trigger waves-effect waves-light" href="#downloadCsvModal"><i class="fa fa-download"></i> CSV Download</li>
+        <li style="background-color: gray" class="waves-effect waves-light dropdown-button" data-activates="modeMenu"><i class="fa fa-list"></i>Mode</li>
+        <li style="background-color: gray" class="waves-effect waves-light"><i class="fa fa-lightbulb-o"></i>How To</li>
+        <li style="background-color: gray" class="waves-effect waves-light"><i class="fa fa-question"></i>FAQ</li>
+        <li class="contact waves-effect waves-light"><a href="mailto:kanai.leek08@gmail.com?subject=[ZenTask]Contact"><i class="material-icons">email</i>Contact</a></li>
+        <ul id="modeMenu@none" class="dropdown-content">
+          <li><a href="#!">Card</a></li>
+          <li><a href="#!">Table</a></li>
+          <li><a href="#!">Zen</a></li>
+        </ul>
+      </ul>
     </div>
-</section>
+  </nav>
+  </header>
+  <main>
+		<p class="addBtn btn-floating btn waves-effect waves-light orange" v-on="click: addTask()"><i class="material-icons">add</i></p>
+		<div class="search">
+			<input id="search" type="search" required name="query" v-model="filterKey" v-on="keyup: watchCardDisp()">
+			<label for="search"><i class="material-icons">search</i></label>
+		</div>
+		<section class="cardSection">
+		  <div class="row animatedParent animateOnce" data-sequence="20">
+		    <div class="col task" v-repeat="task:tasks | filterBy filterKey" v-transition="fade" stagger="10">
+		      <div class="card hoverable z-depth-1 animated flipInY " v-class="active: task.isActive" data-id="{{$index}}">
+            <div class="sashWrap" style='display:none'>
+              <p class="sash">Active</p>
+            </div>
+		        <div class="card-content">
+							<p class="card-header">
+								<span class="card-id">No.{{task.id}}</span>
+			          <span class="modal-trigger deleteBtn right waves-effect waves-light" href="#deleteModal{{$index}}"><i class="fa fa-times-circle"></i></span>
+							</p>
+		          <input class="card-title edit validate" v-model="task.title" placeholder="タスク名" type="text"></input>
+		          <p class="card-time" v-on="click: toggleTime(this, $index)"><i class="material-icons small">schedule</i><span>{{task.time}}</span></p>
+		          <div class="modal-trigger right card-footer" href="#updateModal{{$index}}">
+		            <p><span class="card-projectName">{{task.projectName}}</span>/<span class="card-ticketId">{{task.ticketId}}</span>
+		            <p><span class="card-worker">{{task.worker}}</span>/<span class="card-code">{{task.code}}</span></p>
+		          </div>
+		        </div>
+		      </div>
+					<div id="updateModal{{$index}}" class="updateModal modal">
+						<div class="modal-content center">
+							<h4>詳細情報</h4>
+							<div class="center">
+								<div class="row">
+								  <div class="input-field col s10">
+										 <input placeholder="" id="projectName{{$index}}" v-model="task.projectName" type="text" class="validate">
+										 <label for="projectName{{$index}}">Project Name</label>
+									 </div>
+								</div>
+								<div class="row code">
+								  <div class="input-field col s10">
+										<span>Cost Code</span>
+										<select class="browser-default" v-model="task.code" options="costCodeList"></select>
+									</div>
+								</div>
+								<div class="row">
+								  <div class="input-field col s10">
+										 <input placeholder="" id="time{{$index}}" v-model="task.time" type="text" class="validate">
+										 <label for="time{{$index}}">Time</label>
+									 </div>
+								</div>
+								<div class="row">
+								  <div class="input-field col s10">
+										 <input placeholder="" id="ticketId{{$index}}" v-model="task.ticketId" type="text" class="validate">
+										 <label for="ticketId{{$index}}">Ticket ID</label>
+									 </div>
+								</div>
+								<div class="row">
+								  <div class="input-field col s10">
+										 <input placeholder="" id="worker{{$index}}" v-model="task.worker" type="text" class="validate">
+										 <label for="worker{{$index}}">Worker</label>
+									 </div>
+								</div>
+								<p class="btn modal-action modal-close waves-effect waves-green">Close</p>
+							</div>
+						</div>
+					</div>
+          <div id="deleteModal{{$index}}" class="modal">
+            <div class="modal-content center">
+              <h4>このタスクを削除してもよろしいですか？</h4>
+            </div>
+            <div class="center">
+              <p class="btn modal-action modal-close waves-effect waves-green" v-on="click: deleteTask($index)">OK</p>
+              <p class="btn modal-action modal-close waves-effect waves-green">キャンセル</p>
+            </div>
+          </div>
+		    </div>
+		  </div>
+		</section>
 
+		<section class="container" style='display: none;'>
+		  <table class="responsive-table teal darken-1 white-text">
+		    <thead>
+		      <tr>
+		        <th>プロジェクト名</th>
+		        <th>コストコード</th>
+		        <th>作業者名</th>
+		        <th>チケットID</th>
+		        <th>タイトル</th>
+		        <th>作業時間</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr>
+		        <td><span>Sample Project</span></td>
+		        <td><span>201</span></td>
+		        <td><span>d_kanai</span></td>
+		        <td><span>002002</span></td>
+		        <td><span>Materialize CSS 学習</span></td>
+		        <td><span>02:30:30</span></td>
+		      </tr>
+		    </tbody>
+		  </table>
+		</section>
+  </main>
+
+	<section class='modalSection'>
+		<div id="resetModal" class="modal">
+			<div class="modal-content center">
+				<h4>作業工数をリセットしてもよろしいですか？</h4>
+			</div>
+			<div class="center">
+				<p class="btn modal-action modal-close waves-effect waves-green" v-on="click: resetTime()">OK</p>
+				<p class="btn modal-action modal-close waves-effect waves-green">キャンセル</p>
+			</div>
+		</div>
+		<div id="downloadCsvModal" class="modal">
+			<div class="modal-content center">
+				<h4>作業工数CSVをダウンロードしますか？</h4>
+			</div>
+			<div class="center">
+				<p class="btn modal-action modal-close waves-effect waves-green" v-on="click: downloadCsv()">OK</p>
+				<p class="btn modal-action modal-close waves-effect waves-green">キャンセル</p>
+				<a id='csvFile'></a>
+			</div>
+		</div>
+		<div id="howToModal" class="modal">
+			<div class="modal-content center">
+				<h4>作業工数をリセットしてもよろしいですか？</h4>
+			</div>
+			<div class="center">
+			</div>
+		</div>
+	</section>
+
+	<script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+	<script src='http://cdnjs.cloudflare.com/ajax/libs/vue/0.12.8/vue.min.js'></script>
+	<script src='js/lib/css3-animate-it.js'></script>
+	<script type='text/javascript' src='js/KMJS.js'></script>
+	<script type='text/javascript' src='js/ZenTask.js'></script>
 </body>
 </html>
