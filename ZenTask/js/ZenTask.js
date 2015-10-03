@@ -175,7 +175,7 @@ $(function() {
         // Aタグのhref属性にBlobオブジェクトを設定し、リンクを生成
         window.URL = window.URL || window.webkitURL;
         var elem = document.createElement('a');
-        elem.download = 'Redmine工数_20150909.csv';
+        elem.download = 'Redmine工数.csv'; //ファイル名に日付をつける
         elem.href = window.URL.createObjectURL(blob);
         elem.click();
 
