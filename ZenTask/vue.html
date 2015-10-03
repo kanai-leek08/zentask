@@ -20,11 +20,11 @@
       <ul class="headNav right hide-on-med-and-down">
 				<li class="modal-trigger waves-effect waves-light" href="#resetModal"><i class="material-icons small">schedule</i>Reset Time</li>
 				<li class="modal-trigger waves-effect waves-light" href="#downloadCsvModal"><i class="fa fa-download"></i> CSV Download</li>
-        <li class="waves-effect waves-light dropdown-button" data-activates="modeMenu"><i class="fa fa-list"></i>Mode</li>
-        <li class="modal-trigger waves-effect waves-light" href="#howToModal"><i class="fa fa-lightbulb-o"></i>How To</li>
-        <li class="waves-effect waves-light"><i class="fa fa-question"></i>FAQ</li>
-        <li class="waves-effect waves-light"><i class="material-icons">email</i>Contact</li>
-        <ul id="modeMenu" class="dropdown-content">
+        <li style="background-color: gray" class="waves-effect waves-light dropdown-button" data-activates="modeMenu"><i class="fa fa-list"></i>Mode</li>
+        <li style="background-color: gray" class="waves-effect waves-light"><i class="fa fa-lightbulb-o"></i>How To</li>
+        <li style="background-color: gray" class="waves-effect waves-light"><i class="fa fa-question"></i>FAQ</li>
+        <li class="contact waves-effect waves-light"><a href="mailto:kanai.leek08@gmail.com?subject=[ZenTask]Contact"><i class="material-icons">email</i>Contact</a></li>
+        <ul id="modeMenu@none" class="dropdown-content">
           <li><a href="#!">Card</a></li>
           <li><a href="#!">Table</a></li>
           <li><a href="#!">Zen</a></li>
@@ -65,8 +65,8 @@
 							<div class="center">
 								<div class="row">
 								  <div class="input-field col s10">
-										 <input placeholder="" id="projectName" v-model="task.projectName" type="text" class="validate">
-										 <label for="projectName">Project Name</label>
+										 <input placeholder="" id="projectName{{$index}}" v-model="task.projectName" type="text" class="validate">
+										 <label for="projectName{{$index}}">Project Name</label>
 									 </div>
 								</div>
 								<div class="row code">
@@ -77,14 +77,20 @@
 								</div>
 								<div class="row">
 								  <div class="input-field col s10">
-										 <input placeholder="" id="ticketId" v-model="task.ticketId" type="text" class="validate">
-										 <label for="ticketId">Ticket ID</label>
+										 <input placeholder="" id="time{{$index}}" v-model="task.time" type="text" class="validate">
+										 <label for="time{{$index}}">Time</label>
 									 </div>
 								</div>
 								<div class="row">
 								  <div class="input-field col s10">
-										 <input placeholder="" id="worker" v-model="task.worker" type="text" class="validate">
-										 <label for="worker">Worker</label>
+										 <input placeholder="" id="ticketId{{$index}}" v-model="task.ticketId" type="text" class="validate">
+										 <label for="ticketId{{$index}}">Ticket ID</label>
+									 </div>
+								</div>
+								<div class="row">
+								  <div class="input-field col s10">
+										 <input placeholder="" id="worker{{$index}}" v-model="task.worker" type="text" class="validate">
+										 <label for="worker{{$index}}">Worker</label>
 									 </div>
 								</div>
 								<p class="btn modal-action modal-close waves-effect waves-green">Close</p>

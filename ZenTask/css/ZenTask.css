@@ -20,8 +20,16 @@
   display: -ms-inline-flexbox;
   display: inline-flex;
   padding: 0px 20px; }
+  .headNav li:hover {
+    letter-spacing: 1px; }
   .headNav li i {
     padding: 0px 9px; }
+
+.headNav .contact i {
+  float: left; }
+
+.headNav .contact a {
+  padding: 0px; }
 
 .search {
   margin: 10px;

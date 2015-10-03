@@ -23,8 +23,19 @@ $themeColorLight: #009587;
   li {
     display: inline-flex;
     padding: 0px 20px;
+    &:hover   {
+      letter-spacing: 1px;
+    }
     i {
       padding: 0px 9px;
+    }
+  }
+  .contact {
+    i {
+      float: left;
+    }
+    a {
+      padding: 0px;
     }
   }
 }
