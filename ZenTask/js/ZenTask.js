@@ -2,7 +2,7 @@ $(function() {
   var app = new Vue({
     el: '#app',
     data: {
-      idSeq: 0,
+      idSeq: 1,
       tasks: [],
       sortKey: '',
       filterKey: '',
