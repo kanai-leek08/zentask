@@ -118,6 +118,19 @@ $(function() {
         });
         self.showToast('作業工数をリセットしました');
       },
+      changeMode: function(mode) {
+        if (mode === 1){
+          $(".zenSection").fadeOut(100, function() {
+            $(".ctrlSection, .cardSection").fadeIn(200);
+          });
+        } else if (mode === 2) {
+
+        } else if (mode === 3) {
+          $(".cardSection, .ctrlSection").fadeOut(200, function() {
+            $(".zenSection").fadeIn(200);
+          });
+        }
+      },
       downloadCsv: function() {
         var self = this;
         var csvData = [];

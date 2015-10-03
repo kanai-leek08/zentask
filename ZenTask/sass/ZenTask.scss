@@ -176,6 +176,21 @@ main {
   }
 }
 
+
+.zenTask {
+  text-align: center;
+  margin-top: 150px;
+  font-size: 90px;
+  .title {
+    color: gray;
+    letter-spacing: 5px;
+  }
+  .time {
+    color: orange;
+    letter-spacing: 10px;
+  }
+}
+
 //VUE アニーション定義
 .fade-transition {
     transition: all .3s ease;

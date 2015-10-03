@@ -20,29 +20,31 @@
       <ul class="headNav right hide-on-med-and-down">
 				<li class="modal-trigger waves-effect waves-light" href="#resetModal"><i class="material-icons small">schedule</i>Reset Time</li>
 				<li class="modal-trigger waves-effect waves-light" href="#downloadCsvModal"><i class="fa fa-download"></i> CSV Download</li>
-        <li style="background-color: gray" class="waves-effect waves-light dropdown-button" data-activates="modeMenu"><i class="fa fa-list"></i>Mode</li>
+        <li class="waves-effect waves-light dropdown-button" data-activates="modeMenu"><i class="fa fa-list"></i>Mode</li>
         <li style="background-color: gray" class="waves-effect waves-light"><i class="fa fa-lightbulb-o"></i>How To</li>
         <li style="background-color: gray" class="waves-effect waves-light"><i class="fa fa-question"></i>FAQ</li>
         <li class="contact waves-effect waves-light"><a href="mailto:kanai.leek08@gmail.com?subject=[ZenTask]Contact"><i class="material-icons">email</i>Contact</a></li>
-        <ul id="modeMenu@none" class="dropdown-content">
-          <li><a href="#!">Card</a></li>
-          <li><a href="#!">Table</a></li>
-          <li><a href="#!">Zen</a></li>
+        <ul id="modeMenu" class="dropdown-content">
+          <li class="waves-effect waves" v-on="click: changeMode(1)"><a href="#!">Card</a></li>
+          <li class="waves-effect waves" style='background-color: #B0B0B0'><a href="#!">Table</a></li>
+          <li class="waves-effect waves" v-on="click: changeMode(3)"><a href="#!">Zen</a></li>
         </ul>
       </ul>
     </div>
   </nav>
   </header>
   <main>
-		<p class="addBtn btn-floating btn waves-effect waves-light orange" v-on="click: addTask()"><i class="material-icons">add</i></p>
-		<div class="search">
-			<input id="search" type="search" required name="query" v-model="filterKey" v-on="keyup: watchCardDisp()">
-			<label for="search"><i class="material-icons">search</i></label>
-		</div>
+		<section class="ctrlSection">
+			<p class="addBtn btn-floating btn waves-effect waves-light orange" v-on="click: addTask()"><i class="material-icons">add</i></p>
+			<div class="search">
+				<input id="search" type="search" required name="query" v-model="filterKey" v-on="keyup: watchCardDisp()">
+				<label for="search"><i class="material-icons">search</i></label>
+			</div>
+		</section>
 		<section class="cardSection">
 		  <div class="row animatedParent animateOnce" data-sequence="20">
 		    <div class="col task" v-repeat="task:tasks | filterBy filterKey" v-transition="fade" stagger="10">
-		      <div class="card hoverable z-depth-1 animated flipInY " v-class="active: task.isActive" data-id="{{$index}}">
+		      <div class="card waves-effect waves hoverable z-depth-1 animated flipInY " v-class="active: task.isActive" data-id="{{$index}}">
             <div class="sashWrap" style='display:none'>
               <p class="sash">Active</p>
             </div>
@@ -108,6 +110,16 @@
           </div>
 		    </div>
 		  </div>
+		</section>
+
+
+		<section class="zenSection" style='display: none'>
+			<div class="col task" v-repeat="task:tasks">
+				<div v-cloak class="zenTask" v-if="task.isActive">
+					<div class="title">{{task.title}}</div>
+					<div class="time">{{task.time}}</div>
+				</div>
+			</div>
 		</section>
 
 		<section class="container" style='display: none;'>

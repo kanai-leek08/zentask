@@ -151,6 +151,17 @@ main {
     border-bottom: solid 2px #4CAF50;
     background-color: transparent; }
 
+.zenTask {
+  text-align: center;
+  margin-top: 150px;
+  font-size: 90px; }
+  .zenTask .title {
+    color: gray;
+    letter-spacing: 5px; }
+  .zenTask .time {
+    color: orange;
+    letter-spacing: 10px; }
+
 .fade-transition {
   -webkit-transition: all 0.3s ease;
           transition: all 0.3s ease;
