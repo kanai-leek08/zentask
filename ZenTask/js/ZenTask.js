@@ -136,8 +136,8 @@ $(function() {
         var csvData = [];
         csvData.push('id,プロジェクト,ユーザ,チケットＩＤ,稼働時間,コメント,行動,日付');
         var today = Date.getCurrentDate('/', false);
-        $.each(this.$children, function() {
-          var taskTodayTime = this.task.time;
+        $.each(this.$data.tasks, function() {
+          var taskTodayTime = this.time;
           var times = taskTodayTime.split(':');
           var hun = parseInt(times[1]);
           var hunMap = {};
@@ -158,12 +158,12 @@ $(function() {
           }
           var task = [
               '',//id は空にしておく
-              this.task.projectName,
-              this.task.worker,
-              this.task.ticketId,
+              this.projectName,
+              this.worker,
+              this.ticketId,
               taskTimeForRedmine,
               '', //comment
-              this.task.code,
+              this.code,
               today,
           ];
           csvData.push(task.join(','));
