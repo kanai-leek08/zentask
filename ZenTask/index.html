@@ -19,6 +19,7 @@
 			</div>
       <ul class="headNav right hide-on-med-and-down">
 				<li class="modal-trigger waves-effect waves-light" href="#resetModal"><i class="material-icons small">schedule</i>Reset Time</li>
+				<li class="modal-trigger waves-effect waves-light" href="#registRedmineWorktime"><i class="fa fa-check"></i>Redmine Regist</li>
 				<li class="modal-trigger waves-effect waves-light" href="#downloadCsvModal"><i class="fa fa-download"></i> CSV Download</li>
         <li class="waves-effect waves-light dropdown-button" data-activates="modeMenu"><i class="fa fa-list"></i>Mode</li>
         <li style="background-color: gray" class="waves-effect waves-light"><i class="fa fa-lightbulb-o"></i>How To</li>
@@ -173,6 +174,16 @@
 				<h4>作業工数をリセットしてもよろしいですか？</h4>
 			</div>
 			<div class="center">
+			</div>
+		</div>
+		<div id="registRedmineWorktime" class="modal">
+			<div class="modal-content center">
+				<h4>Redmineに今日の工数として登録しますか？</h4>
+			</div>
+			<div class="center">
+				<p class="btn modal-action modal-close waves-effect waves-green" v-on="click: registRedmineWorktime()">OK</p>
+				<p class="btn modal-action modal-close waves-effect waves-green">キャンセル</p>
+				<a id='csvFile'></a>
 			</div>
 		</div>
 	</section>

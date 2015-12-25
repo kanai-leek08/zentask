@@ -215,6 +215,21 @@ $(function() {
         var countTimeMillSec = parseInt(times[0]*60*60*1000) - parseInt(times[1]*60*1000) - parseInt(times[2]*1000); // 通算ミリ秒計算
         countTime(Date.now() + countTimeMillSec);
       },
+      registRedmineWorktime() {
+        var self = this;
+        var data = {
+          "hoge" : 'fuga',
+        };
+        $.ajax({
+            type: 'POST',
+            url: "/",
+            data: data,
+        }).done(function(data){
+          self.showToast('Redmineに工数登録しました。');
+        }).fail(function(data){
+          self.showToast('Redmineに工数登録に失敗しました。');
+        });
+      },
       watchCardDisp() {
         //検索して非表示→表示になった際にイベント再設定
         $('.card').addClass('go');
