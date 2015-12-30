@@ -19,8 +19,8 @@
 			</div>
       <ul class="headNav right hide-on-med-and-down">
 				<li class="modal-trigger waves-effect waves-light" href="#resetModal"><i class="material-icons small">schedule</i>Reset Time</li>
-				<li class="modal-trigger waves-effect waves-light" href="#registRedmineWorktime"><i class="fa fa-check"></i>Redmine Regist</li>
-				<li class="modal-trigger waves-effect waves-light" href="#downloadCsvModal"><i class="fa fa-download"></i> CSV Download</li>
+				<li class="modal-trigger waves-effect waves-light" href="#findProjectTicket"><i class="fa fa-check"></i>Redmineチケット取得</li>
+				<li class="modal-trigger waves-effect waves-light" href="#registRedmineWorktime"><i class="fa fa-check"></i>Redmine工数登録</li>
         <li class="waves-effect waves-light dropdown-button" data-activates="modeMenu"><i class="fa fa-list"></i>Mode</li>
         <li style="background-color: gray" class="waves-effect waves-light"><i class="fa fa-lightbulb-o"></i>How To</li>
         <li style="background-color: gray" class="waves-effect waves-light"><i class="fa fa-question"></i>FAQ</li>
@@ -159,16 +159,6 @@
 				<p class="btn modal-action modal-close waves-effect waves-green">キャンセル</p>
 			</div>
 		</div>
-		<div id="downloadCsvModal" class="modal">
-			<div class="modal-content center">
-				<h4>作業工数CSVをダウンロードしますか？</h4>
-			</div>
-			<div class="center">
-				<p class="btn modal-action modal-close waves-effect waves-green" v-on="click: downloadCsv()">OK</p>
-				<p class="btn modal-action modal-close waves-effect waves-green">キャンセル</p>
-				<a id='csvFile'></a>
-			</div>
-		</div>
 		<div id="howToModal" class="modal">
 			<div class="modal-content center">
 				<h4>作業工数をリセットしてもよろしいですか？</h4>
@@ -186,6 +176,27 @@
 				<a id='csvFile'></a>
 			</div>
 		</div>
+		<div id="findProjectTicket" class="modal">
+			<div class="modal-content center">
+      	<h4>Redmineチケット選択</h4>
+      </div>
+      <div class="search">
+      	<input type="text" placeholder="RedmineのプロジェクトID" required>
+      </div>
+      <p class="addBtn btn waves-effect waves-light" v-on="click: findProjectTicket()"><i class="material-icons">add</i>プロジェクトを追加</p>
+   		<div class="col" v-repeat="project: projectList">
+        <h4>{{project.id}} {{project.name}}</h2>
+        <div class="col" v-repeat="ticket: project.ticketList">
+        	<p>
+          	<input type="checkbox" class="filled-in" id="check{{ticket.id}}">
+            <label for="check{{ticket.id}}">{{ticket.name}}</label>
+          </p>
+        </div>
+      </div>
+      <div class="center">
+      	<p class="btn modal-action modal-close waves-effect waves-green">閉じる</p>
+      </div>
+  	</div>
 	</section>
 
 	<script src='https://code.jquery.com/jquery-2.1.4.min.js'></script>

@@ -3,6 +3,24 @@ $(function() {
     el: '#app',
     data: {
       idSeq: 1,
+      projectList: [
+        {
+          id: 1,
+          name: 'projectA',
+          ticketList: [
+            {id: 1, name: 'tikectA'},
+            {id: 2, name: 'tikectB'},
+          ]
+        },
+        {
+          id: 2,
+          name: 'projectB',
+          ticketList: [
+            {id: 3, name: 'tikectC'},
+            {id: 4, name: 'tikectD'},
+          ]
+        }
+      ],
       tasks: [],
       sortKey: '',
       filterKey: '',
@@ -113,8 +131,8 @@ $(function() {
       },
       resetTime() {
         var self = this;
-        $.each(this.$children, function() {
-          this.task.time = '00:00:00';
+        $.each(this.tasks, function() {
+          this.time = '00:00:00';
         });
         self.showToast('作業工数をリセットしました');
       },
@@ -202,10 +220,11 @@ $(function() {
         }
 
         //タイマーリセット処理
-        $.each(this.$children, function() {
-          clearTimeout(this.task.timerObj);
-          this.task.isActive = false;
+        $.each(this.tasks, function() {
+          clearTimeout(this.timerObj);
+          this.isActive = false;
         });
+
         $('.sashWrap').hide(400);
 
         //タイマーセット処理
@@ -218,17 +237,44 @@ $(function() {
       registRedmineWorktime() {
         var self = this;
         var data = {
-          "hoge" : 'fuga',
+          'issue_id' : '',
+          'spen_on' : '',
+          'hours' : '',
+          'activity_id' : '',
+          'comments' : '',
         };
+
+        self.ajax(
+          'POST',
+          '/time_entries.xml',
+          data,
+          function(){self.showToast('Redmineに工数を登録しました')},
+          function(){self.showToast('Redmineへの工数登録に失敗しました')}
+        );
+      },
+      findProjectTicket() {
+        var self = this;
+        var data = {
+          project_id : 2,
+        };
+        self.ajax(
+          'GET',
+          '/issues.xml',
+          data,
+          self.updateTicketList,
+          function(){self.showToast('チケットリストの取得に失敗しました')}
+        );
+      },
+      updateTicketList() {
+
+      },
+      ajax(method, url, data, cbSuccess, cbFailed, context) {
         $.ajax({
-            type: 'POST',
-            url: "/",
-            data: data,
-        }).done(function(data){
-          self.showToast('Redmineに工数登録しました。');
-        }).fail(function(data){
-          self.showToast('Redmineに工数登録に失敗しました。');
-        });
+          type: method,
+          url: url,
+          data: data,
+          context : context
+        }).done(cbSuccess).fail(cbFailed);
       },
       watchCardDisp() {
         //検索して非表示→表示になった際にイベント再設定
