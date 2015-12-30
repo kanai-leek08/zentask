@@ -185,6 +185,7 @@
       </div>
       <p class="addBtn btn waves-effect waves-light" v-on="click: findProjectTicket()"><i class="material-icons">add</i>プロジェクトを追加</p>
    		<div class="col" v-repeat="project: projectList">
+				{{project.$key}}
         <h4>{{project.id}} {{project.name}}</h2>
         <div class="col" v-repeat="ticket: project.ticketList">
         	<p>

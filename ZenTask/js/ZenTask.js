@@ -3,24 +3,33 @@ $(function() {
     el: '#app',
     data: {
       idSeq: 1,
-      projectList: [
-        {
-          id: 1,
-          name: 'projectA',
+      list: {
+  hoge: {
+    a: "alpha",
+    b: "bravo",
+    c: "charlie"
+  },
+  fuga: {
+    d: "delta",
+    e: "echo"
+  },
+  piyo: {
+    f: "foxtrot",
+    g: "golf",
+    h: "hotel"
+  }
+},
+      projectList: {
+        99 : {
+          name: 'hoge',
           ticketList: [
-            {id: 1, name: 'tikectA'},
-            {id: 2, name: 'tikectB'},
-          ]
-        },
-        {
-          id: 2,
-          name: 'projectB',
-          ticketList: [
-            {id: 3, name: 'tikectC'},
-            {id: 4, name: 'tikectD'},
+            {
+              id: '1',
+              name: 'ticetA'
+            }
           ]
         }
-      ],
+      },
       tasks: [],
       sortKey: '',
       filterKey: '',
@@ -259,14 +268,29 @@ $(function() {
         };
         self.ajax(
           'GET',
-          '/issues.xml',
+          '/issues.json',
           data,
           self.updateTicketList,
-          function(){self.showToast('チケットリストの取得に失敗しました')}
+          self.updateTicketList
+          //function(){self.showToast('チケットリストの取得に失敗しました')}
         );
       },
-      updateTicketList() {
-
+      updateTicketList(data) {
+        var self = this;
+        data = mockProjectTicketData;
+        self.projectList[data.issues[0].project.id] =
+        {
+          'name': data.issues[0].project.name,
+          'ticketList': []
+        };
+        $.each(data.issues, function() {
+          self.projectList[this.project.id].ticketList.push(
+            {
+              'id': this.id,
+              'name': this.subject
+            }
+          );
+        });
       },
       ajax(method, url, data, cbSuccess, cbFailed, context) {
         $.ajax({
@@ -285,3 +309,82 @@ $(function() {
     }
   });
 });
+
+var mockProjectTicketData =
+{
+    "issues": [
+        {
+            "author": {
+                "id": 26,
+                "name": "名前"
+            },
+            "created_on": "2015/12/21 18:05:48 +0900",
+            "description": "",
+            "done_ratio": 0,
+            "due_date": "2016/01/26",
+            "id": 34163,
+            "parent": {
+                "id": 33732
+            },
+            "priority": {
+                "id": 4,
+                "name": "通常"
+            },
+            "project": {
+                "id": 99,
+                "name": "プロジェクト名"
+            },
+            "start_date": "2016/01/19",
+            "status": {
+                "id": 1,
+                "name": "新規"
+            },
+            "subject": "Sprint18",
+            "tracker": {
+                "id": 1,
+                "name": "WBS"
+            },
+            "updated_on": "2015/12/21 18:05:48 +0900"
+        },
+       {
+            "assigned_to": {
+                "id": 26,
+                "name": "ほげ"
+            },
+            "author": {
+                "id": 26,
+                "name": "ふが"
+            },
+            "category": {
+                "id": 21,
+                "name": "PJ管理"
+            },
+            "created_on": "2014/06/02 09:26:44 +0900",
+            "description": "",
+            "done_ratio": 0,
+            "id": 6311,
+            "priority": {
+                "id": 4,
+                "name": "通常"
+            },
+            "project": {
+                "id": 99,
+                "name": "ほげ"
+            },
+            "start_date": "2014/08/04",
+            "status": {
+                "id": 1,
+                "name": "新規"
+            },
+            "subject": "プロジェクト管理",
+            "tracker": {
+                "id": 1,
+                "name": "WBS"
+            },
+            "updated_on": "2015/10/01 09:23:35 +0900"
+        }
+    ],
+    "limit": 100,
+    "offset": 0,
+    "total_count": 21
+};
