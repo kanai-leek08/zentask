@@ -3,42 +3,13 @@ $(function() {
     el: '#app',
     data: {
       idSeq: 1,
-      list: {
-  hoge: {
-    a: "alpha",
-    b: "bravo",
-    c: "charlie"
-  },
-  fuga: {
-    d: "delta",
-    e: "echo"
-  },
-  piyo: {
-    f: "foxtrot",
-    g: "golf",
-    h: "hotel"
-  }
-},
-      projectList: {
-        99 : {
-          name: 'hoge',
-          ticketList: [
-            {
-              id: '1',
-              name: 'ticetA'
-            }
-          ]
-        }
-      },
+      projectList: {},
       tasks: [],
       sortKey: '',
       filterKey: '',
+      projectId: '',
       isReverse: {
         projectName: false,
-        ticketId: false,
-        title: false,
-        code: false,
-        time: false
       },
       costCodeList: [
         { text: '100:要件定義', value: '100:要件定義' },
@@ -70,21 +41,32 @@ $(function() {
     },
     created: function() {
       var self = this;
+
+      // データセット
       var idSeq = localStorage.get('ZenTask-ID');
-      if (idSeq) {
+      if (idSeq)  {
         self.idSeq = idSeq;
       }
       var tasks = localStorage.get('ZenTask-Task');
       if (tasks) {
         self.tasks = tasks;
       }
+      var projectList = localStorage.get('ZenTask-ProjectList');
+      if (tasks) {
+        self.projectList = projectList;
+      }
+
+      // イベント イニシャライズ
       $(".button-collapse").sideNav();
       $(".dropdown-button").dropdown();
       setTimeout(function(){
         $('.modal-trigger').leanModal({opacity: .6, in_duration: 200, out_duration: 200});
         $('select').material_select();
       }, 100);
-      $(window).on("beforeunload",function(e){ self.saveTask(); });
+      $(window).on("beforeunload",function(e){
+         self.saveTask();
+         self.saveProjectList();
+      });
     },
     methods:{
       addTask: function(){
@@ -117,6 +99,9 @@ $(function() {
         });
         localStorage.set('ZenTask-Task', this.tasks);
         localStorage.set('ZenTask-ID', this.idSeq);
+      },
+      saveProjectList: function(){
+        localStorage.set('ZenTask-ProjectList', this.projectList);
       },
       editTask: function(elem) {
       },
@@ -264,7 +249,7 @@ $(function() {
       findProjectTicket() {
         var self = this;
         var data = {
-          project_id : 2,
+          project_id : self.projectId,
         };
         self.ajax(
           'GET',
@@ -275,15 +260,24 @@ $(function() {
           //function(){self.showToast('チケットリストの取得に失敗しました')}
         );
       },
-      updateTicketList(data) {
+      updateTicketList(response) {
         var self = this;
-        data = mockProjectTicketData;
-        self.projectList[data.issues[0].project.id] =
-        {
-          'name': data.issues[0].project.name,
-          'ticketList': []
-        };
-        $.each(data.issues, function() {
+        response = mockProjectTicketData2;
+
+        //最新データを表示するためにdelete insertする
+        self.projectList.$delete([response.issues[0].project.id]);
+
+        //プロジェクト情報のセット
+        self.projectList.$add( //dataのプロパティを書き換えるときはVueの関数を使わないと反映されない
+          [response.issues[0].project.id],
+          {
+            'name': response.issues[0].project.name,
+            'ticketList': []
+          }
+        );
+
+        //プロジェクトのチケット情報のセット
+        $.each(response.issues, function() {
           self.projectList[this.project.id].ticketList.push(
             {
               'id': this.id,
@@ -302,9 +296,9 @@ $(function() {
       },
       watchCardDisp() {
         //検索して非表示→表示になった際にイベント再設定
-        $('.card').addClass('go');
-        $('.modal-trigger').leanModal({opacity: .6, in_duration: 100, out_duration: 100});
-        $('select').material_select();
+        $('.card').addClass('go'); //カード表示アニメーション発火
+        $('.modal-trigger').leanModal({opacity: .6, in_duration: 100, out_duration: 100}); //modalイベント登録
+        $('select').material_select(); //セレクトボックスデザイン適用
       }
     }
   });
@@ -332,7 +326,7 @@ var mockProjectTicketData =
             },
             "project": {
                 "id": 99,
-                "name": "プロジェクト名"
+                "name": "プロジェクトA"
             },
             "start_date": "2016/01/19",
             "status": {
@@ -377,6 +371,85 @@ var mockProjectTicketData =
                 "name": "新規"
             },
             "subject": "プロジェクト管理",
+            "tracker": {
+                "id": 1,
+                "name": "WBS"
+            },
+            "updated_on": "2015/10/01 09:23:35 +0900"
+        }
+    ],
+    "limit": 100,
+    "offset": 0,
+    "total_count": 21
+};
+
+var mockProjectTicketData2 =
+{
+    "issues": [
+        {
+            "author": {
+                "id": 26,
+                "name": "名前"
+            },
+            "created_on": "2015/12/21 18:05:48 +0900",
+            "description": "",
+            "done_ratio": 0,
+            "due_date": "2016/01/26",
+            "id": 35163,
+            "parent": {
+                "id": 33732
+            },
+            "priority": {
+                "id": 4,
+                "name": "通常"
+            },
+            "project": {
+                "id": 100,
+                "name": "プロジェクトB"
+            },
+            "start_date": "2016/01/19",
+            "status": {
+                "id": 1,
+                "name": "新規"
+            },
+            "subject": "プロジェクトBのほげ",
+            "tracker": {
+                "id": 1,
+                "name": "WBS"
+            },
+            "updated_on": "2015/12/21 18:05:48 +0900"
+        },
+       {
+            "assigned_to": {
+                "id": 26,
+                "name": "ほげ"
+            },
+            "author": {
+                "id": 26,
+                "name": "ふが"
+            },
+            "category": {
+                "id": 21,
+                "name": "PJ管理"
+            },
+            "created_on": "2014/06/02 09:26:44 +0900",
+            "description": "",
+            "done_ratio": 0,
+            "id": 6311,
+            "priority": {
+                "id": 4,
+                "name": "通常"
+            },
+            "project": {
+                "id": 100,
+                "name": "プロジェクトB"
+            },
+            "start_date": "2014/08/04",
+            "status": {
+                "id": 1,
+                "name": "新規"
+            },
+            "subject": "ふがふが",
             "tracker": {
                 "id": 1,
                 "name": "WBS"

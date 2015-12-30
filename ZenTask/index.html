@@ -181,18 +181,20 @@
       	<h4>Redmineチケット選択</h4>
       </div>
       <div class="search">
-      	<input type="text" placeholder="RedmineのプロジェクトID" required>
+      	<input type="text" v-model="projectId" placeholder="RedmineのプロジェクトID" required>
       </div>
       <p class="addBtn btn waves-effect waves-light" v-on="click: findProjectTicket()"><i class="material-icons">add</i>プロジェクトを追加</p>
    		<div class="col" v-repeat="project: projectList">
 				{{project.$key}}
         <h4>{{project.id}} {{project.name}}</h2>
-        <div class="col" v-repeat="ticket: project.ticketList">
-        	<p>
-          	<input type="checkbox" class="filled-in" id="check{{ticket.id}}">
-            <label for="check{{ticket.id}}">{{ticket.name}}</label>
-          </p>
-        </div>
+				<div>
+	        <div class="col" v-repeat="ticket: project.ticketList">
+	        	<p>
+	          	<input type="checkbox" class="filled-in" id="check{{ticket.id}}">
+	            <label for="check{{ticket.id}}">{{ticket.name}}</label>
+	          </p>
+	        </div>
+				</div>
       </div>
       <div class="center">
       	<p class="btn modal-action modal-close waves-effect waves-green">閉じる</p>
