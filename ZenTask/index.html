@@ -38,7 +38,7 @@
 		<section class="ctrlSection">
 			<p class="addBtn btn-floating btn waves-effect waves-light orange" v-on="click: addTask()"><i class="material-icons">add</i></p>
 			<div class="search">
-				<input id="search" type="search" required name="query" v-model="filterKey" v-on="keyup: watchCardDisp()">
+				<input id="search" type="search" required name="query" v-model="filterKey" v-on="keyup: setCardEvent()">
 				<label for="search"><i class="material-icons">search</i></label>
 			</div>
 		</section>
@@ -52,7 +52,8 @@
 		        <div class="card-content">
 							<p class="card-header">
 								<span class="card-id">No.{{task.id}}</span>
-			          <span class="modal-trigger deleteBtn right waves-effect waves-light" href="#deleteModal{{$index}}"><i class="fa fa-times-circle"></i></span>
+			          <span class="modal-trigger deleteBtn right" href="#deleteModal{{$index}}"><i class="fa fa-times-circle"></i></span>
+			          <span class="copyBtn right" v-on="click: copyTask($index)"><i class="fa fa-files-o"></i></span>
 							</p>
 		          <p class="card-title"><span>{{task.title}}</span></p>
 		          <p class="card-time" v-on="click: toggleTime(this, $index)"><i class="material-icons small">schedule</i><span>{{task.time}}</span></p>
@@ -181,7 +182,7 @@
       <div class="search">
       	<input type="text" v-model="projectId" placeholder="RedmineのプロジェクトID" required>
       </div>
-      <p class="addBtn btn waves-effect waves-light" v-on="click: findProjectTicket()"><i class="material-icons">add</i>プロジェクトを追加</p>
+      <p class="btn waves-effect waves-light" v-on="click: findProjectTicket()"><i class="material-icons">add</i>プロジェクトを追加</p>
    		<div class="col" v-repeat="project: projectList">
 				{{project.$key}}
         <h4>{{project.id}} {{project.name}}</h2>

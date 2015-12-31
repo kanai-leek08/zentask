@@ -77,7 +77,7 @@ $(function() {
             projectName: 'ProjectName',
             ticketId: 'Ticket ID',
             title: 'New Task',
-            code: '600:間接',
+            code: ' 600:間接 ',
             comment: '',
             worker: 'Worker',
             time: '00:00:00',
@@ -86,11 +86,9 @@ $(function() {
             isActive: false
           }
         );
-        setTimeout(function(){
-          $('.card:not(.go)').addClass('go');
-          $('select').material_select();
-          $('.modal-trigger').leanModal({opacity: .6, in_duration: 100, out_duration: 100});
-        }, 100);
+
+        //イベント再設定
+        self.setCardEvent();
       },
       addTicket: function() {
         var self = this;
@@ -114,11 +112,7 @@ $(function() {
         });
 
         //イベント再設定
-        setTimeout(function(){
-          $('.card:not(.go)').addClass('go');
-          $('select').material_select();
-          $('.modal-trigger').leanModal({opacity: .6, in_duration: 100, out_duration: 100});
-        }, 100);
+        self.setCardEvent();
       },
       saveTask: function(){
         $.each(this.tasks, function() {
@@ -142,6 +136,28 @@ $(function() {
         self.tasks.$remove(index);
         self.showToast('タスクを削除しました');
       },
+      copyTask: function(index) {
+        var self = this;
+        var copyTask = self.tasks[index];
+        self.tasks.unshift(
+          {
+            id: self.idSeq++,
+            projectName: copyTask.projectName,
+            ticketId: copyTask.ticketId,
+            title: copyTask.title,
+            code: copyTask.code,
+            time: '00:00:00',
+            comment: copyTask.comment,
+            timerObj: null,
+            isDone: false,
+            isActive: false
+          }
+        );
+        self.showToast('タスクをコピーしました');
+
+        //イベント再設定
+        self.setCardEvent();
+      },
       doneTask: function(elem) {
         elem.isDone = true;
       },
@@ -150,7 +166,7 @@ $(function() {
         this.isReverse[key] = !this.isReverse[key]
       },
       showToast: function(msg) {
-        Materialize.toast(msg, 2000)
+        Materialize.toast(msg, 2500)
       },
       resetTime() {
         var self = this;
@@ -323,12 +339,14 @@ $(function() {
           context : context
         }).done(cbSuccess).fail(cbFailed);
       },
-      watchCardDisp() {
+      setCardEvent() {
         //検索して非表示→表示になった際にイベント再設定
-        $('.card').addClass('go'); //カード表示アニメーション発火
-        $('.modal-trigger').leanModal({opacity: .6, in_duration: 100, out_duration: 100}); //modalイベント登録
-        $('select').material_select(); //セレクトボックスデザイン適用
-      }
+        setTimeout(function(){
+          $('.card:not(.go)').addClass('go'); //カード表示アニメーション発火
+          $('.modal-trigger').leanModal({opacity: .6, in_duration: 100, out_duration: 100}); //modalイベント登録
+          $('select').material_select(); //セレクトボックスデザイン適用
+        }, 100);
+      },
     }
   });
 });
@@ -464,7 +482,7 @@ var mockProjectTicketData2 =
             "created_on": "2014/06/02 09:26:44 +0900",
             "description": "",
             "done_ratio": 0,
-            "id": 6311,
+            "id": 6319,
             "priority": {
                 "id": 4,
                 "name": "通常"
@@ -480,7 +498,7 @@ var mockProjectTicketData2 =
             },
             "subject": "ふがふが",
             "tracker": {
-                "id": 1,
+                "id": 8,
                 "name": "WBS"
             },
             "updated_on": "2015/10/01 09:23:35 +0900"

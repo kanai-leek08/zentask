@@ -72,6 +72,9 @@ main {
       color: #8CACAA; }
     .task .card .card-header .deleteBtn {
       color: #B2DFDB; }
+    .task .card .card-header .copyBtn {
+      color: #8CACAA;
+      padding-right: 9px; }
   .task .card .card-title {
     font-weight: bold;
     padding-top: 12px;
