@@ -54,11 +54,15 @@
 								<span class="card-id">No.{{task.id}}</span>
 			          <span class="modal-trigger deleteBtn right waves-effect waves-light" href="#deleteModal{{$index}}"><i class="fa fa-times-circle"></i></span>
 							</p>
-		          <input class="card-title edit validate" v-model="task.title" placeholder="タスク名" type="text"></input>
+		          <p class="card-title"><span>{{task.title}}</span></p>
 		          <p class="card-time" v-on="click: toggleTime(this, $index)"><i class="material-icons small">schedule</i><span>{{task.time}}</span></p>
+							<div class="card-comment">
+								<i class="fa fa-comment-o prefix"></i>
+								<input class="edit validate" v-model="task.comment" placeholder="コメント" type="text"></input>
+							</div>
 		          <div class="modal-trigger right card-footer" href="#updateModal{{$index}}">
-		            <p><span class="card-projectName">{{task.projectName}}</span>/<span class="card-ticketId">{{task.ticketId}}</span>
-		            <p><span class="card-worker">{{task.worker}}</span>/<span class="card-code">{{task.code}}</span></p>
+		            <p><span class="card-costCode">{{task.code}}</span></p>
+		            <p><span class="card-projectName">{{task.projectName}}</span> #<span class="card-ticketId">{{task.ticketId}}</span>
 		          </div>
 		        </div>
 		      </div>
@@ -68,8 +72,8 @@
 							<div class="center">
 								<div class="row">
 								  <div class="input-field col s10">
-										 <input placeholder="" id="projectName{{$index}}" v-model="task.projectName" type="text" class="validate">
-										 <label for="projectName{{$index}}">Project Name</label>
+										 <input placeholder="" id="title{{$index}}" v-model="task.title" type="text" class="validate">
+										 <label for="title{{$index}}">Title</label>
 									 </div>
 								</div>
 								<div class="row code">
@@ -86,14 +90,8 @@
 								</div>
 								<div class="row">
 								  <div class="input-field col s10">
-										 <input placeholder="" id="ticketId{{$index}}" v-model="task.ticketId" type="text" class="validate">
-										 <label for="ticketId{{$index}}">Ticket ID</label>
-									 </div>
-								</div>
-								<div class="row">
-								  <div class="input-field col s10">
-										 <input placeholder="" id="worker{{$index}}" v-model="task.worker" type="text" class="validate">
-										 <label for="worker{{$index}}">Worker</label>
+										 <input placeholder="" id="comment{{$index}}" v-model="task.comment" type="text" class="validate">
+										 <label for="comment{{$index}}">Comment</label>
 									 </div>
 								</div>
 								<p class="btn modal-action modal-close waves-effect waves-green">Close</p>
@@ -190,14 +188,14 @@
 				<div>
 	        <div class="col" v-repeat="ticket: project.ticketList">
 	        	<p>
-	          	<input type="checkbox" class="filled-in" id="check{{ticket.id}}">
+	          	<input type="checkbox" class="filled-in" id="check{{ticket.id}}" name="ticket" data-ticketid="{{ticket.id}}" data-title="{{ticket.name}}" data-projectname={{project.name}}>
 	            <label for="check{{ticket.id}}">{{ticket.name}}</label>
 	          </p>
 	        </div>
 				</div>
       </div>
       <div class="center">
-      	<p class="btn modal-action modal-close waves-effect waves-green">閉じる</p>
+      	<p class="btn modal-action modal-close waves-effect waves-green" v-on="click: addTicket()">追加</p>
       </div>
   	</div>
 	</section>

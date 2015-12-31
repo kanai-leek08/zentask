@@ -61,6 +61,7 @@ main {
   padding: 0px 5px; }
 
 .task .card {
+  min-width: 250px;
   margin: 8px;
   width: 100%; }
   .task .card:hover {
@@ -72,18 +73,33 @@ main {
     .task .card .card-header .deleteBtn {
       color: #B2DFDB; }
   .task .card .card-title {
+    font-weight: bold;
+    padding-top: 12px;
     margin: 0px;
     color: gray;
-    border-bottom: solid 1px #009587;
     font-size: 18px; }
   .task .card .card-time {
     color: gray;
-    font-size: 18px;
-    padding-top: 10px; }
+    font-size: 18px; }
     .task .card .card-time i {
       vertical-align: top;
       font-size: 24px;
       padding: 0px 5px 0px 0px; }
+  .task .card .card-comment {
+    color: gray;
+    height: 45px;
+    position: relative; }
+    .task .card .card-comment i {
+      position: absolute;
+      font-size: 19px;
+      font-weight: bold;
+      top: 4px;
+      left: 2px; }
+    .task .card .card-comment input {
+      width: 80%;
+      position: absolute;
+      top: -6px;
+      left: 30px; }
   .task .card .card-footer {
     color: #B2DFDB;
     font-size: 11px; }

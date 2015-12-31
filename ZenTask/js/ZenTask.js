@@ -76,8 +76,9 @@ $(function() {
             id: self.idSeq++,
             projectName: 'ProjectName',
             ticketId: 'Ticket ID',
-            title: '',
-            code: '100:要件定義',
+            title: 'New Task',
+            code: '600:間接',
+            comment: '',
             worker: 'Worker',
             time: '00:00:00',
             timerObj: null,
@@ -86,7 +87,35 @@ $(function() {
           }
         );
         setTimeout(function(){
-          $('.card[data-id=0]').addClass('go');
+          $('.card:not(.go)').addClass('go');
+          $('select').material_select();
+          $('.modal-trigger').leanModal({opacity: .6, in_duration: 100, out_duration: 100});
+        }, 100);
+      },
+      addTicket: function() {
+        var self = this;
+
+        //チェックをつけたチケットのカードを追加
+        $.each($('input[name=ticket][type=checkbox]:checked'), function() {
+          self.tasks.unshift(
+            {
+              id: self.idSeq++,
+              projectName: $(this).attr('data-projectname'),
+              ticketId: $(this).attr('data-ticketid'),
+              title: $(this).attr('data-title'),
+              code: '600:間接',
+              time: '00:00:00',
+              comment: '',
+              timerObj: null,
+              isDone: false,
+              isActive: false
+            }
+          );
+        });
+
+        //イベント再設定
+        setTimeout(function(){
+          $('.card:not(.go)').addClass('go');
           $('select').material_select();
           $('.modal-trigger').leanModal({opacity: .6, in_duration: 100, out_duration: 100});
         }, 100);
