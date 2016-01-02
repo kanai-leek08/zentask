@@ -175,10 +175,14 @@ main {
   }
 }
 .modal {
+  color: gray;
   h4 {
     font-size: 20px;
     color: gray;
     margin: 0px;
+  }
+  input {
+    width: 400px;
   }
 }
 .updateModal {

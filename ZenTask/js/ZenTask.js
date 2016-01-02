@@ -8,6 +8,7 @@ $(function() {
       sortKey: '',
       filterKey: '',
       projectId: '',
+      APIKey: '',
       isReverse: {
         projectName: false,
       },
@@ -55,6 +56,10 @@ $(function() {
       if (tasks) {
         self.projectList = projectList;
       }
+      var APIKey = localStorage.get('ZenTask-RedmineAPIKey');
+      if (APIKey) {
+        self.APIKey = APIKey;
+      }
 
       // イベント イニシャライズ
       $(".button-collapse").sideNav();
@@ -66,6 +71,7 @@ $(function() {
       $(window).on("beforeunload",function(e){
          self.saveTask();
          self.saveProjectList();
+         self.saveAPIKey();
       });
     },
     methods:{
@@ -125,6 +131,9 @@ $(function() {
       },
       saveProjectList: function(){
         localStorage.set('ZenTask-ProjectList', this.projectList);
+      },
+      saveAPIKey: function(){
+        localStorage.set('ZenTask-RedmineAPIKey', this.APIKey);
       },
       editTask: function(elem) {
       },
@@ -275,31 +284,73 @@ $(function() {
       },
       registRedmineWorktime() {
         var self = this;
-        var data = {
-          'issue_id' : '',
-          'spen_on' : '',
-          'hours' : '',
-          'activity_id' : '',
-          'comments' : '',
-        };
+        if(self.APIKey === '') {
+          self.showToast('[Error] RedmineAPIアクセスキーが登録されていません。');
+          return false;
+        }
 
-        self.ajax(
-          'POST',
-          '/time_entries.xml',
-          data,
-          function(){self.showToast('Redmineに工数を登録しました')},
-          function(){self.showToast('Redmineへの工数登録に失敗しました')}
-        );
+        var paramList = [];
+        $.each(self.tasks, function() {
+          var taskTodayTime = this.time;
+          var times = taskTodayTime.split(':');
+          var hun = parseInt(times[1]);
+          var hunMap = {};
+          var Z60 = Math.abs(60 - hun);
+          var Z45 = Math.abs(45 - hun);
+          var Z30 = Math.abs(30 - hun);
+          var Z15 = Math.abs(15 - hun);
+          var Z00 = Math.abs(0 - hun);
+          hunMap[Z60] = 60;
+          hunMap[Z45] = 45;
+          hunMap[Z30] = 30;
+          hunMap[Z15] = 15;
+          hunMap[Z00] = 0;
+          var hunKinjichi = Math.min.apply(null, [Z60,Z45,Z30,Z15,Z00]);
+          var taskTimeForRedmine = (parseInt(times[0]*60) + hunMap[hunKinjichi]) / 60;
+          if (taskTimeForRedmine === 0) {
+            return true;//continueと同じ
+          }
+
+          paramList.push({
+            'issue_id' : this.ticketId,
+            //'spent_on' : '', defaultは当日
+            'hours' : taskTimeForRedmine,
+            'activity_id' : this.code,
+            'comments' : this.comment,
+            'key' : self.APIKey
+          });
+        });
+
+        var postWorktime = function() {
+          var params = paramList.pop();
+          if (typeof params === 'undefined') {
+            self.showToast('Redmineへ工数登録しました');
+            return false;
+          }
+
+          self.ajax(
+            'POST',
+            '/time_entries.json',
+            params,
+            postWorktime,
+            postWorktime
+            // function(){
+            //   self.showToast('Redmineへの工数登録に失敗しました');
+            //   return false;
+            // }
+          );
+        };
+        postWorktime();
       },
       findProjectTicket() {
         var self = this;
-        var data = {
+        var params = {
           project_id : self.projectId,
         };
         self.ajax(
           'GET',
           '/issues.json',
-          data,
+          params,
           self.updateTicketList,
           self.updateTicketList
           //function(){self.showToast('チケットリストの取得に失敗しました')}
@@ -307,7 +358,7 @@ $(function() {
       },
       updateTicketList(response) {
         var self = this;
-        response = mockProjectTicketData2;
+        response = mockProjectTicketData;
 
         //最新データを表示するためにdelete insertする
         self.projectList.$delete([response.issues[0].project.id]);
@@ -331,11 +382,11 @@ $(function() {
           );
         });
       },
-      ajax(method, url, data, cbSuccess, cbFailed, context) {
+      ajax(method, url, params, cbSuccess, cbFailed, context) {
         $.ajax({
           type: method,
           url: url,
-          data: data,
+          data: params,
           context : context
         }).done(cbSuccess).fail(cbFailed);
       },

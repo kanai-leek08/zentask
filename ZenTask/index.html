@@ -36,7 +36,7 @@
   </header>
   <main>
 		<section class="ctrlSection">
-			<p class="addBtn btn-floating btn waves-effect waves-light orange" v-on="click: addTask()"><i class="material-icons">add</i></p>
+			<p style="display: none;" class="addBtn btn-floating btn waves-effect waves-light orange" v-on="click: addTask()"><i class="material-icons">add</i></p>
 			<div class="search">
 				<input id="search" type="search" required name="query" v-model="filterKey" v-on="keyup: setCardEvent()">
 				<label for="search"><i class="material-icons">search</i></label>
@@ -168,6 +168,11 @@
 		<div id="registRedmineWorktime" class="modal">
 			<div class="modal-content center">
 				<h4>Redmineに今日の工数として登録しますか？</h4>
+			</div>
+			<div class="center accessKey">
+				<p>RedmineAPIアクセスキーを入力のうえ、OKを押してください</p>
+				<a href="/img/accessKey.png" target="_blank">APIアクセスキー取得方法</a>
+      	<input type="text" v-model="APIKey" placeholder="APIアクセスキー" required>
 			</div>
 			<div class="center">
 				<p class="btn modal-action modal-close waves-effect waves-green" v-on="click: registRedmineWorktime()">OK</p>

@@ -151,10 +151,14 @@ main {
     -webkit-transition-timing-function: ease-out;
             transition-timing-function: ease-out; }
 
-.modal h4 {
-  font-size: 20px;
-  color: gray;
-  margin: 0px; }
+.modal {
+  color: gray; }
+  .modal h4 {
+    font-size: 20px;
+    color: gray;
+    margin: 0px; }
+  .modal input {
+    width: 400px; }
 
 .updateModal .row {
   margin-left: 60px; }
