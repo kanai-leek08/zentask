@@ -158,7 +158,8 @@ main {
     color: gray;
     margin: 0px; }
   .modal .APIKey input {
-    width: 400px; }
+    width: 400px;
+    color: coral; }
 
 .updateModal .row {
   margin-left: 60px; }
