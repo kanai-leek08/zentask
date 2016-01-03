@@ -181,8 +181,10 @@ main {
     color: gray;
     margin: 0px;
   }
-  input {
-    width: 400px;
+  .APIKey {
+    input {
+      width: 400px;
+    }
   }
 }
 .updateModal {
@@ -199,6 +201,40 @@ main {
       border: none;
       border-bottom: solid 2px #4CAF50;
       background-color: transparent;
+    }
+  }
+}
+.ticketSelectModal {
+  .body {
+  .addProject {
+    font-size: 12px;
+    margin: -20px 0px 20px 0px;
+    input {
+      width: 200px;
+    }
+  }
+    margin-left: 20px;
+    .project {
+      padding-bottom: 20px;
+      h4 {
+        display: inline-block;
+      }
+      .projectId {
+        font-size: 12px;
+        padding-left: 5px;
+        color: #B2B2B2;
+      }
+      .projectDeleteBtn {
+        font-size: 17px;
+        padding-left: 10px;
+        cursor: pointer;
+      }
+      .ticket {
+        display: inline-block;
+        label {
+          padding: 0px 15px 0px 25px;
+        }
+      }
     }
   }
 }
